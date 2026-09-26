@@ -7,7 +7,7 @@
 - [x] Cài **Node.js LTS** (kiểm tra: `node -v`, `npm -v`)
 - [x] Cài **MySQL 8** + một công cụ xem CSDL (MySQL Workbench, DBeaver hoặc HeidiSQL)
 - [ ] Cài extension VS Code: **Live Server**, **REST Client** (hoặc dùng Postman) để thử API
-- [ ] Commit trạng thái hiện tại, rồi tạo nhánh mới:
+- [x] Tạo nhánh mới + commit (f32ad3b):
       `git checkout -b feature/ecommerce`
 - [x] Tạo 2 thư mục `frontend/` và `backend/`
 - [x] Chuyển code cũ vào frontend (dùng `git mv` để giữ lịch sử):

@@ -119,7 +119,7 @@ todo-list/
 │   │   ├── controllers/            # *.controller.js
 │   │   ├── services/               # *.service.js (+ payment/vnpay.service.js)
 │   │   ├── models/                 # *.model.js
-│   │   ├── utils/                  # ApiError.js, asyncHandler.js, jwt.js
+│   │   ├── utils/                  # ApiError.js, jwt.js
 │   │   ├── app.js                  # Cấu hình express + middleware chung
 │   │   └── server.js               # Khởi động server
 │   ├── database/
@@ -196,8 +196,8 @@ Làm **theo thứ tự**. Xong giai đoạn nào thì chạy thử được giai
 
 | # | Giai đoạn | File chi tiết | Trạng thái |
 |---|---|---|---|
-| 0 | Chuẩn bị & tái cấu trúc thư mục | [phase-00](phase-00-preparation.md) | 🟡 chờ commit |
-| 1 | Dựng khung Backend (Express + MVC) | [phase-01](phase-01-backend-skeleton.md) | ⬜ |
+| 0 | Chuẩn bị & tái cấu trúc thư mục | [phase-00](phase-00-preparation.md) | ✅ |
+| 1 | Dựng khung Backend (Express + MVC) | [phase-01](phase-01-backend-skeleton.md) | ✅ |
 | 2 | Cơ sở dữ liệu MySQL | [phase-02](phase-02-database.md) | ⬜ |
 | 3 | Đăng ký / Đăng nhập (Backend) | [phase-03](phase-03-auth-backend.md) | ⬜ |
 | 4 | Nền tảng Frontend + trang Đăng nhập/Đăng ký | [phase-04](phase-04-frontend-foundation.md) | ⬜ |
