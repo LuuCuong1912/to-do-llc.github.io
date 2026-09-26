@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Biến môi trường (chứa mật khẩu DB, secret) — chỉ commit .env.example
+.env
+.env.*
+!.env.example
+
+# Log & file hệ thống
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# Build / test output
+coverage/
+dist/
