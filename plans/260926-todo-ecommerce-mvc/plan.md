@@ -198,7 +198,7 @@ Làm **theo thứ tự**. Xong giai đoạn nào thì chạy thử được giai
 |---|---|---|---|
 | 0 | Chuẩn bị & tái cấu trúc thư mục | [phase-00](phase-00-preparation.md) | ✅ |
 | 1 | Dựng khung Backend (Express + MVC) | [phase-01](phase-01-backend-skeleton.md) | ✅ |
-| 2 | Cơ sở dữ liệu MySQL | [phase-02](phase-02-database.md) | ⬜ |
+| 2 | Cơ sở dữ liệu MySQL | [phase-02](phase-02-database.md) | ✅ |
 | 3 | Đăng ký / Đăng nhập (Backend) | [phase-03](phase-03-auth-backend.md) | ⬜ |
 | 4 | Nền tảng Frontend + trang Đăng nhập/Đăng ký | [phase-04](phase-04-frontend-foundation.md) | ⬜ |
 | 5 | Landing page + API gói | [phase-05](phase-05-landing-packages.md) | ⬜ |

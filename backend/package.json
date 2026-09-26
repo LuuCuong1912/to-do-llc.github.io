@@ -5,7 +5,9 @@
   "main": "src/server.js",
   "scripts": {
     "dev": "nodemon src/server.js",
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "db:setup": "node database/setup.js",
+    "db:reset": "node database/setup.js --reset"
   },
   "type": "module",
   "dependencies": {
