@@ -33,11 +33,11 @@ POST /api/auth/login
 
 ## Việc cần làm
 
-- [ ] Tạo các file trên theo đúng thứ tự: model → service → controller → validator → route
-- [ ] Mật khẩu hash bằng `bcrypt` với saltRounds = 10
-- [ ] Thông báo khi đăng nhập sai phải **giống nhau** cho cả "sai email" lẫn "sai mật khẩu" (không để lộ email nào đã đăng ký)
-- [ ] `me` trả về user kèm gói đang dùng (tạm để `null`, giai đoạn 7 sẽ bổ sung)
-- [ ] Viết file `backend/requests/auth.http` (dùng extension REST Client) để thử nhanh
+- [x] Tạo các file trên theo đúng thứ tự: model → service → controller → validator → route
+- [x] Mật khẩu hash bằng `bcrypt` với saltRounds = 10
+- [x] Thông báo khi đăng nhập sai phải **giống nhau** cho cả "sai email" lẫn "sai mật khẩu" (không để lộ email nào đã đăng ký)
+- [x] `me` trả về user kèm gói đang dùng (tạm để `null`, giai đoạn 7 sẽ bổ sung)
+- [x] Viết file `backend/requests/auth.http` (dùng extension REST Client) để thử nhanh
 
 ## Kết quả khi xong
 
@@ -45,3 +45,21 @@ POST /api/auth/login
 - Đăng nhập đúng → có cookie `token`. Gọi `/me` → trả thông tin user
 - Đăng nhập sai quá 5 lần → 429
 - Trong bảng `users`, cột mật khẩu là chuỗi hash, **không phải mật khẩu gốc**
+
+## Ghi chú khi thực hiện (2026-09-26)
+
+**Khác so với kế hoạch:**
+- API dùng **camelCase** (`fullName`), DB dùng snake_case (`full_name`). Service chuyển đổi qua `toPublicUser()`
+- **Đăng ký xong thì đăng nhập luôn** (gắn cookie ngay, trả 201)
+- `POST /logout` **không cần** `authenticate`: token hết hạn vẫn đăng xuất (xóa cookie) được
+- Thêm `utils/auth-cookie.js` (tên cookie, set/clear) để middleware không phải import từ controller (đúng chiều phân lớp)
+- Mật khẩu: 8–72 ký tự (bcrypt chỉ dùng 72 byte đầu), phải có cả chữ và số
+- Rate limit chỉ đếm lần đăng nhập **sai** (`skipSuccessfulRequests`)
+
+**Bảo mật bổ sung:**
+- So sánh với hash giả khi email không tồn tại → thời gian phản hồi như nhau, không dò được email đã đăng ký
+- Bắt `ER_DUP_ENTRY` khi 2 request đăng ký cùng email đến cùng lúc
+- `jwt.verify` chỉ chấp nhận thuật toán `HS256`
+- `validate` bỏ field lạ (`stripUnknown`), ví dụ gửi `"role":"admin"` sẽ bị bỏ qua
+
+**Đã kiểm tra (curl):** đăng ký 201 + cookie HttpOnly · /me 200 · email trùng 409 · dữ liệu sai 400 kèm lỗi từng field · không gửi body 400 · logout → /me 401 · token giả 401 · email không phân biệt hoa/thường · sai 5 lần → 429 · 3 request đăng ký đồng thời → 201/409/409 · tiếng Việt + emoji lưu đúng · mật khẩu lưu dạng bcrypt `$2b$10$...`

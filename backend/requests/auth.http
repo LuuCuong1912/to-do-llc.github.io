@@ -1,0 +1,51 @@
+# REST Client tự nhớ cookie giữa các request → đăng nhập xong gọi /me được luôn
+# Chạy lần lượt từ trên xuống
+
+@baseUrl = http://localhost:3000/api
+
+### 1. Đăng ký (đăng ký xong là đăng nhập luôn)
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "fullName": "Nguyễn Văn A",
+  "email": "vana@example.com",
+  "password": "matkhau123"
+}
+
+### 2. Xem thông tin của tôi (cần cookie)
+GET {{baseUrl}}/auth/me
+
+### 3. Đăng xuất (xóa cookie)
+POST {{baseUrl}}/auth/logout
+
+### 4. Gọi /me sau khi đăng xuất → 401
+GET {{baseUrl}}/auth/me
+
+### 5. Đăng nhập
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "vana@example.com",
+  "password": "matkhau123"
+}
+
+### 6. Đăng nhập sai (gửi 6 lần → lần 6 bị 429)
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "vana@example.com",
+  "password": "saimatkhau"
+}
+
+### 7. Dữ liệu không hợp lệ → 400 kèm lỗi từng ô
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "fullName": "A",
+  "email": "khong-phai-email",
+  "password": "123"
+}

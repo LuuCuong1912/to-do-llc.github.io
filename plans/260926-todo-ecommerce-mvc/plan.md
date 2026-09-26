@@ -173,7 +173,7 @@ Giá gói đề xuất (sửa tùy ý trong `seed.sql`):
 |---|---|---|---|
 | POST | `/api/auth/register` | validate | Đăng ký |
 | POST | `/api/auth/login` | rateLimit, validate | Đăng nhập, gắn cookie JWT |
-| POST | `/api/auth/logout` | authenticate | Xóa cookie |
+| POST | `/api/auth/logout` | — | Xóa cookie |
 | GET | `/api/auth/me` | authenticate | Thông tin người dùng + gói đang dùng |
 | GET | `/api/packages` | — | Danh sách gói (landing page) |
 | GET | `/api/packages/:code` | — | Chi tiết 1 gói |
@@ -199,7 +199,7 @@ Làm **theo thứ tự**. Xong giai đoạn nào thì chạy thử được giai
 | 0 | Chuẩn bị & tái cấu trúc thư mục | [phase-00](phase-00-preparation.md) | ✅ |
 | 1 | Dựng khung Backend (Express + MVC) | [phase-01](phase-01-backend-skeleton.md) | ✅ |
 | 2 | Cơ sở dữ liệu MySQL | [phase-02](phase-02-database.md) | ✅ |
-| 3 | Đăng ký / Đăng nhập (Backend) | [phase-03](phase-03-auth-backend.md) | ⬜ |
+| 3 | Đăng ký / Đăng nhập (Backend) | [phase-03](phase-03-auth-backend.md) | ✅ |
 | 4 | Nền tảng Frontend + trang Đăng nhập/Đăng ký | [phase-04](phase-04-frontend-foundation.md) | ⬜ |
 | 5 | Landing page + API gói | [phase-05](phase-05-landing-packages.md) | ⬜ |
 | 6 | Giỏ hàng | [phase-06](phase-06-cart.md) | ⬜ |
