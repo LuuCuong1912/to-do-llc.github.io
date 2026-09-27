@@ -11,5 +11,6 @@ router.use(authenticate);
 router.post('/', validate(createOrderSchema), orderController.create);
 router.get('/', orderController.list);
 router.get('/:id', orderController.getById);
+router.patch('/:id/cancel', orderController.cancel);
 
 export default router;

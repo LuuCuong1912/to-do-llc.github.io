@@ -59,7 +59,7 @@ Production **không** bật `VNP_CONFIRM_ON_RETURN`. Kết quả thanh toán ch�
 ## Nếu tách Frontend và Backend ra 2 tên miền
 
 Ví dụ Frontend trên Netlify và Backend trên Render. Khi đó cần thêm:
-- `COOKIE_SAMESITE=none`. Cookie sẽ tự bật `Secure`, nên bắt buộc HTTPS
+- `COOKIE_SAMESITE=none`. Cookie sẽ tự bật `Secure`, nên bắt buộc HTTPS. Middleware `checkOrigin` sẽ từ chối request thay đổi dữ liệu đến từ tên miền không có trong `CLIENT_URL` (chống CSRF), vì vậy **phải khai báo đúng `CLIENT_URL`**
 - `CLIENT_URL=https://<frontend>.netlify.app`
 - Sửa `frontend/js/config.js` để `API_BASE_URL` trỏ tới địa chỉ Backend
 

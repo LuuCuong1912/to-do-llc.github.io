@@ -42,8 +42,8 @@ describe('todoService.createTodo — giới hạn theo gói', () => {
     );
   });
 
-  it('gói Pro (maxTasks = null) → không giới hạn', async () => {
-    todoModel.countByUser.mockResolvedValue(10_000);
+  it('gói Pro (maxTasks = null) → không bị giới hạn theo gói (dưới trần an toàn)', async () => {
+    todoModel.countByUser.mockResolvedValue(todoService.UNLIMITED_PLAN_CAP - 1);
     todoModel.create.mockResolvedValue(1);
     todoModel.findByIdForUser.mockResolvedValue(todoRow());
     await expect(todoService.createTodo(1, PRO, { text: 'mới' })).resolves.toMatchObject({ completed: false });
@@ -80,5 +80,13 @@ describe('todoService.updateTodo — quyền theo gói', () => {
   it('việc không tồn tại / của người khác → 404', async () => {
     todoModel.findByIdForUser.mockResolvedValue(null);
     await expect(todoService.updateTodo(1, GOLD, 99, { completed: true })).rejects.toMatchObject({ statusCode: 404 });
+  });
+});
+
+describe('todoService.createTodo — trần an toàn cho gói không giới hạn', () => {
+  it(`Pro đã có ${todoService.UNLIMITED_PLAN_CAP} việc → 403`, async () => {
+    todoModel.countByUser.mockResolvedValue(todoService.UNLIMITED_PLAN_CAP);
+    await expect(todoService.createTodo(1, PRO, { text: 'mới' })).rejects.toMatchObject({ code: 'TASK_LIMIT_REACHED' });
+    expect(todoModel.create).not.toHaveBeenCalled();
   });
 });

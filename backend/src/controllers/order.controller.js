@@ -14,3 +14,8 @@ export const getById = async (req, res) => {
   const order = await orderService.getOrderDetail(req.user.id, req.params.id);
   res.json({ success: true, data: { order } });
 };
+
+export const cancel = async (req, res) => {
+  const order = await orderService.cancelOrder(req.user.id, req.params.id);
+  res.json({ success: true, data: { order } });
+};

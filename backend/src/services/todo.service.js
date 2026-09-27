@@ -6,6 +6,10 @@ import * as userModel from '../models/user.model.js';
 // Tính năng theo gói (tier: 1 Basic, 2 Gold, 3 Pro)
 export const FEATURE_MIN_TIER = { editTodo: 2 };
 
+// Gói "không giới hạn" (max_tasks = NULL) vẫn có trần an toàn: tránh 1 tài khoản tạo vô hạn dòng
+// làm phình DB và làm trang tải cả danh sách khổng lồ
+export const UNLIMITED_PLAN_CAP = 1000;
+
 const toPublicTodo = (row) => ({
   id: row.id,
   text: row.text,
@@ -44,6 +48,13 @@ export const createTodo = async (userId, plan, { text }) =>
         403,
         'TASK_LIMIT_REACHED',
         `Gói ${plan.name} cho phép tối đa ${plan.maxTasks} công việc. Nâng cấp gói để thêm nhiều hơn.`,
+      );
+    }
+    if (plan.maxTasks === null && count >= UNLIMITED_PLAN_CAP) {
+      throw new ApiError(
+        403,
+        'TASK_LIMIT_REACHED',
+        `Bạn đã có ${UNLIMITED_PLAN_CAP} công việc. Hãy xóa bớt các việc đã hoàn thành để thêm việc mới.`,
       );
     }
 

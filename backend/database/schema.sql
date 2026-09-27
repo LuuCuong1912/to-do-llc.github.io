@@ -123,6 +123,6 @@ CREATE TABLE IF NOT EXISTS todos (
   created_at DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
-  KEY idx_todos_user (user_id),
+  KEY idx_todos_user_created (user_id, created_at, id),     -- khớp truy vấn "việc của user, sắp theo thời gian"
   CONSTRAINT fk_todos_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

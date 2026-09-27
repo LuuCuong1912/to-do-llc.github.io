@@ -33,6 +33,12 @@ const VIEWS = {
     title: 'Đơn hàng đang chờ thanh toán',
     desc: 'Nếu bạn đã thanh toán, hệ thống sẽ cập nhật sau ít giây.',
   },
+  cancelled: {
+    icon: 'fa-ban',
+    tone: 'danger',
+    title: 'Đơn hàng đã hủy',
+    desc: 'Đơn đã bị hủy hoặc quá hạn thanh toán. Giỏ hàng của bạn vẫn còn, bạn có thể đặt lại.',
+  },
 };
 
 const actionsFor = (order) => {

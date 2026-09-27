@@ -55,8 +55,12 @@ Mọi endpoint trả về giỏ hàng mới nhất: `{ cart: { items: [{ id, mon
 | POST | `/orders` | `{ paymentMethod: "mock" \| "vnpay" }` | 201 `{ order }` (status `pending`) · 400 `CART_EMPTY` · 400 `PAYMENT_METHOD_DISABLED` |
 | GET | `/orders` | — | `{ orders }` mới nhất trước (tối đa 50) |
 | GET | `/orders/:id` | — | `{ order }` · 404 nếu không phải đơn của mình |
+| PATCH | `/orders/:id/cancel` | — | `{ order }` (cancelled) · 409 `ORDER_NOT_CANCELLABLE` (không còn pending) · 409 `PAYMENT_IN_PROGRESS` (link VNPay của đơn còn hiệu lực) |
 
-`order = { id, orderCode, status, paymentMethod, totalAmount, createdAt, paidAt, items: [{ packageName, unitPrice, months, subtotal }] }`. `status` ∈ `pending | paid | failed | cancelled`.
+`order = { id, orderCode, status, paymentMethod, totalAmount, createdAt, paidAt, expiresAt, items: [{ packageName, unitPrice, months, subtotal }] }`. `status` ∈ `pending | paid | failed | cancelled`.
+
+- **Không tạo đơn trùng:** đã có đơn `pending` còn hạn với **cùng các gói, số tháng, giá và cùng phương thức** → `POST /orders` trả lại đơn đó.
+- **Hết hạn:** đơn `pending` quá **30 phút** (`expiresAt`) tự chuyển sang `cancelled`, thanh toán sẽ nhận 409 `ORDER_EXPIRED`. Link VNPay hết hạn sau 15 phút, nên đơn luôn hết hạn **sau** link thanh toán.
 
 ### Thanh toán
 
@@ -81,7 +85,7 @@ Khi thanh toán thành công (mock hoặc IPN), trong **1 transaction**: đơn �
 | PATCH | `/todos/:id` | `{ text?, completed? }` | 403 `FEATURE_NOT_AVAILABLE` (Basic sửa nội dung) · 409 `TODO_COMPLETED` |
 | DELETE | `/todos/:id` | — | |
 
-Chưa có gói còn hạn → 403 `SUBSCRIPTION_REQUIRED`.
+Chưa có gói còn hạn → 403 `SUBSCRIPTION_REQUIRED`. Gói "không giới hạn" (Pro) có trần an toàn **1.000 việc**.
 
 ## Mã lỗi chung
 
@@ -90,5 +94,6 @@ Chưa có gói còn hạn → 403 `SUBSCRIPTION_REQUIRED`.
 | 400 | `VALIDATION_ERROR` | Dữ liệu sai, có `details` cho từng ô |
 | 400 | `INVALID_JSON` | Body không phải JSON hợp lệ |
 | 401 | `UNAUTHENTICATED` | Chưa đăng nhập / token hết hạn |
+| 403 | `FORBIDDEN_ORIGIN` | Chống CSRF: request POST/PATCH/DELETE gửi từ trang web lạ (header `Origin` không nằm trong `CLIENT_URL`) |
 | 404 | `NOT_FOUND` | Sai URL |
 | 500 | `INTERNAL_ERROR` | Lỗi không lường trước (production không lộ chi tiết) |

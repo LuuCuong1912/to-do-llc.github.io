@@ -7,6 +7,7 @@ import * as orderModel from '../../models/order.model.js';
 import * as paymentModel from '../../models/payment.model.js';
 import * as orderService from '../order.service.js';
 import { assertMethodEnabled } from './methods.js';
+import { VNPAY_LINK_TTL_MINUTES } from '../../config/order.js';
 
 const PROVIDER = 'vnpay';
 
@@ -87,7 +88,7 @@ export const createPaymentUrl = async (userId, rawOrderId, ipAddr) => {
     vnp_ReturnUrl: config.returnUrl,
     vnp_IpAddr: normalizeIp(ipAddr),
     vnp_CreateDate: formatVnDate(now),
-    vnp_ExpireDate: formatVnDate(new Date(now.getTime() + 15 * 60 * 1000)),
+    vnp_ExpireDate: formatVnDate(new Date(now.getTime() + VNPAY_LINK_TTL_MINUTES * 60 * 1000)),
   });
 
   return { paymentUrl: `${config.url}?${query}&vnp_SecureHash=${sign(query, config.hashSecret)}` };

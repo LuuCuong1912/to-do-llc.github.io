@@ -8,6 +8,7 @@ import cookieParser from 'cookie-parser';
 import env from './config/env.js';
 import routes from './routes/index.js';
 import { notFound, errorHandler } from './middlewares/error.middleware.js';
+import { checkOrigin } from './middlewares/origin-check.middleware.js';
 
 const app = express();
 const frontendDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../frontend');
@@ -33,7 +34,7 @@ app.use(cors({ origin: env.clientUrls, credentials: true })); // 2. Cho phép Fr
 app.use(express.json({ limit: '100kb' })); // 3. Đọc body JSON → req.body
 app.use(cookieParser()); // 4. Đọc cookie → req.cookies
 
-app.use('/api', routes); // 5. Các route của ứng dụng
+app.use('/api', checkOrigin, routes); // 5. Chống CSRF → các route của ứng dụng
 
 // 6. (Tùy chọn) phục vụ giao diện từ cùng server khi deploy
 if (env.serveFrontend) app.use(express.static(frontendDir, { extensions: ['html'] }));

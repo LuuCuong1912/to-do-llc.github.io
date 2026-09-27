@@ -6,6 +6,12 @@ import { showToast } from '../components/toast.js';
 import { updateCartBadge } from '../components/navbar.js';
 import { el } from '../utils/dom.js';
 
+// Bảng giá không phụ thuộc đăng nhập → gọi /packages NGAY, song song với /auth/me trong initPage()
+// thay vì chờ /auth/me xong mới gọi (tiết kiệm 1 lượt mạng). .catch() rỗng: tránh cảnh báo "lỗi chưa xử lý"
+// nếu request lỗi trong lúc chờ initPage — lỗi vẫn được bắt ở loadPricing() bên dưới.
+const packagesRequest = getPackages();
+packagesRequest.catch(() => {});
+
 const session = await initPage({ access: 'public' });
 const grid = document.getElementById('pricing-grid');
 
@@ -42,14 +48,14 @@ const renderError = (message) => {
       { class: 'empty-state card pricing-status' },
       el('p', { class: 'empty-state__title' }, 'Không tải được bảng giá'),
       el('p', { class: 'empty-state__desc' }, message),
-      el('button', { type: 'button', class: 'btn btn--primary', onClick: loadPricing }, 'Thử lại'),
+      el('button', { type: 'button', class: 'btn btn--primary', onClick: () => loadPricing(getPackages()) }, 'Thử lại'),
     ),
   );
 };
 
-async function loadPricing() {
+async function loadPricing(request) {
   try {
-    const packages = await getPackages();
+    const packages = await request;
     grid.replaceChildren(
       ...packages.map((pkg) =>
         createPackageCard(pkg, {
@@ -63,7 +69,7 @@ async function loadPricing() {
   }
 }
 
-await loadPricing();
+await loadPricing(packagesRequest);
 
 // Trang được tạo bằng JS → trình duyệt chưa cuộn tới #pricing lúc tải, cuộn lại sau khi vẽ xong
 if (window.location.hash) document.getElementById(window.location.hash.slice(1))?.scrollIntoView();

@@ -23,6 +23,16 @@ export const findByProviderRef = async ({ provider, transactionRef }, { db = poo
   return rows[0] ?? null;
 };
 
+// Đơn có lượt thanh toán đang chờ, tạo trong `minutes` phút gần đây (link cổng thanh toán có thể vẫn còn dùng được)
+export const hasRecentPending = async ({ orderId, minutes }, db = pool) => {
+  const [rows] = await db.execute(
+    `SELECT 1 FROM payments
+      WHERE order_id = ? AND status = 'pending' AND created_at >= NOW() - INTERVAL ? MINUTE LIMIT 1`,
+    [orderId, minutes],
+  );
+  return rows.length > 0;
+};
+
 export const updateResult = async ({ id, status, rawResponse }, db = pool) => {
   await db.execute('UPDATE payments SET status = ?, raw_response = ? WHERE id = ?', [status, toJson(rawResponse), id]);
 };
