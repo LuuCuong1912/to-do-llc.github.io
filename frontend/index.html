@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TodoPro — Quản lý công việc gọn gàng</title>
+    <meta
+      name="description"
+      content="TodoPro giúp bạn quản lý công việc hằng ngày, theo dõi tiến độ và lưu trữ đám mây. Chọn gói Basic, Gold hoặc Pro."
+    />
+    <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/feedback.css" />
+    <link rel="stylesheet" href="/css/pages/landing.css" />
+    <link rel="stylesheet" href="/css/pages/pricing.css" />
+  </head>
+  <body>
+    <header class="navbar" id="navbar"></header>
+
+    <main>
+      <!-- Hero -->
+      <section class="hero container">
+        <div class="hero__content">
+          <p class="hero__eyebrow">Ứng dụng Todo trên đám mây</p>
+          <h1 class="hero__title">Quản lý công việc <span>gọn gàng</span>, hoàn thành mọi mục tiêu</h1>
+          <p class="hero__desc">
+            Ghi lại việc cần làm, theo dõi tiến độ theo thời gian thực và dùng trên mọi thiết bị. Chọn gói phù hợp với
+            bạn: Basic, Gold hoặc Pro.
+          </p>
+          <div class="hero__actions">
+            <a class="btn btn--primary" id="hero-cta" href="/pages/register.html">Đăng ký ngay</a>
+            <a class="btn btn--ghost" id="hero-trial" href="/pages/app.html">
+              <i class="fa-solid fa-flask" aria-hidden="true"></i>
+              Dùng thử miễn phí
+            </a>
+            <a class="btn btn--ghost" id="hero-pricing" href="#pricing">Xem bảng giá</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tính năng -->
+      <section class="section container" id="features" aria-labelledby="features-title">
+        <header class="section__header">
+          <h2 class="section__title" id="features-title">Mọi thứ bạn cần để làm việc hiệu quả</h2>
+          <p class="section__desc">Đơn giản như tờ giấy ghi chú, mạnh mẽ như một công cụ quản lý thực thụ.</p>
+        </header>
+        <div class="features">
+          <article class="feature card">
+            <span class="feature__icon"><i class="fa-solid fa-chart-simple" aria-hidden="true"></i></span>
+            <h3 class="feature__title">Theo dõi tiến độ</h3>
+            <p class="feature__desc">Thanh tiến độ cập nhật ngay khi bạn hoàn thành một việc.</p>
+          </article>
+          <article class="feature card">
+            <span class="feature__icon"><i class="fa-solid fa-cloud" aria-hidden="true"></i></span>
+            <h3 class="feature__title">Lưu trữ đám mây</h3>
+            <p class="feature__desc">Đăng nhập ở máy nào cũng thấy đủ danh sách công việc của bạn.</p>
+          </article>
+          <article class="feature card">
+            <span class="feature__icon"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i></span>
+            <h3 class="feature__title">Chỉnh sửa linh hoạt</h3>
+            <p class="feature__desc">Sửa nội dung công việc bất cứ lúc nào (gói Gold trở lên).</p>
+          </article>
+          <article class="feature card">
+            <span class="feature__icon"><i class="fa-solid fa-champagne-glasses" aria-hidden="true"></i></span>
+            <h3 class="feature__title">Ăn mừng thành quả</h3>
+            <p class="feature__desc">Pháo giấy tung bay khi bạn hoàn thành tất cả công việc.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Bảng giá: thẻ gói được tạo từ API /api/packages -->
+      <section class="section container" id="pricing" aria-labelledby="pricing-title">
+        <header class="section__header">
+          <h2 class="section__title" id="pricing-title">Chọn gói phù hợp với bạn</h2>
+          <p class="section__desc">Mua nhiều tháng một lần, gia hạn nối tiếp khi gói còn hạn.</p>
+        </header>
+        <div class="pricing-grid" id="pricing-grid" aria-live="polite">
+          <div class="skeleton pricing-skeleton"></div>
+          <div class="skeleton pricing-skeleton"></div>
+          <div class="skeleton pricing-skeleton"></div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="section container" id="faq" aria-labelledby="faq-title">
+        <header class="section__header">
+          <h2 class="section__title" id="faq-title">Câu hỏi thường gặp</h2>
+        </header>
+        <div class="faq">
+          <details class="faq__item card">
+            <summary>Tôi có thể dùng thử trước khi mua không?</summary>
+            <p>
+              Có. Bấm <a href="/pages/app.html">Dùng thử miễn phí</a> để dùng Todo App ngay, không cần đăng ký (tối đa 5
+              công việc, lưu trên trình duyệt). Mua gói để lưu trên đám mây và mở khóa thêm tính năng.
+            </p>
+          </details>
+          <details class="faq__item card">
+            <summary>Mua thêm khi gói còn hạn thì sao?</summary>
+            <p>Thời hạn mới được cộng nối tiếp vào ngày hết hạn hiện tại, bạn không bị mất ngày nào.</p>
+          </details>
+          <details class="faq__item card">
+            <summary>Nếu tôi mua cả Basic và Pro?</summary>
+            <p>Hệ thống luôn áp dụng gói cao nhất đang còn hạn cho tài khoản của bạn.</p>
+          </details>
+          <details class="faq__item card">
+            <summary>Thanh toán bằng cách nào?</summary>
+            <p>Hỗ trợ VNPay (thẻ ATM nội địa, QR, thẻ quốc tế). Bản demo có thêm thanh toán giả lập để trải nghiệm.</p>
+          </details>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__inner">
+        <p>© 2026 TodoPro — Dự án cá nhân (HTML/CSS/JS · Node.js · Express · MySQL)</p>
+        <a href="#pricing">Bảng giá</a>
+      </div>
+    </footer>
+
+    <script type="module" src="/js/pages/landing.js"></script>
+  </body>
+</html>

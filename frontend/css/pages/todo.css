@@ -1,0 +1,221 @@
+/* Todo App — chuyển từ frontend/legacy/style.css, dùng biến màu chung */
+
+.todo-app {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  max-width: 560px;
+  margin-inline: auto;
+}
+
+.todo-app__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.todo-app__title {
+  font-size: var(--text-xl);
+}
+
+.todo-app__plan {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+/* ---------- Thống kê tiến độ ---------- */
+.todo-stats {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  padding: var(--space-4) var(--space-5);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-sm);
+}
+
+.todo-stats__details {
+  flex: 1;
+}
+
+.todo-stats__bar {
+  height: 7px;
+  margin-top: var(--space-4);
+  background: rgba(255, 194, 209, 0.18);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.todo-stats__progress {
+  width: 0;
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: var(--radius-lg);
+  transition: width 0.6s ease;
+}
+
+.todo-stats__numbers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  background: var(--color-primary);
+  border: 2px solid rgba(255, 194, 209, 0.3);
+  border-radius: 50%;
+}
+
+/* ---------- Ô nhập ---------- */
+.todo-form {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.todo-form .input {
+  flex: 1;
+}
+
+.todo-form__submit {
+  flex-shrink: 0;
+  width: 44px;
+  padding: 0;
+}
+
+.todo-limit {
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  background: rgba(251, 191, 36, 0.12);
+  border: 1px solid rgba(251, 191, 36, 0.4);
+  border-radius: var(--radius-sm);
+}
+
+.todo-limit a {
+  color: var(--color-gold);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+/* ---------- Danh sách ---------- */
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  list-style: none;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  font-size: 1.1rem;
+  background: rgba(255, 194, 209, 0.3);
+  border-radius: 30px;
+  transition: background var(--transition);
+}
+
+.todo-item__check {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  cursor: pointer;
+  appearance: none;
+  transition:
+    background var(--transition),
+    transform var(--transition);
+}
+
+.todo-item__check:checked {
+  background: var(--color-primary);
+  transform: scale(1.1);
+}
+
+.todo-item__check:checked::before {
+  content: '\2713';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 0.8rem;
+}
+
+.todo-item__text {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.todo-item.is-completed .todo-item__text {
+  text-decoration: line-through 2px;
+  opacity: 0.6;
+}
+
+.todo-item__edit {
+  flex: 1;
+  min-height: 32px;
+  padding: 0 var(--space-3);
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-pill);
+  outline: none;
+}
+
+.todo-item__actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.todo-item__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  font-size: 0.8rem;
+  border-radius: 50%;
+  transition: transform var(--transition);
+}
+
+.todo-item__btn:hover:not(:disabled) {
+  transform: scale(1.15);
+}
+
+.todo-item__btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.todo-item__btn--edit {
+  background: #d99a00;
+}
+
+.todo-item__btn--delete {
+  background: var(--color-primary);
+}
+
+.todo-empty {
+  width: min(260px, 70%);
+  margin-inline: auto;
+}
+
+@media (max-width: 480px) {
+  .todo-stats__numbers {
+    width: 60px;
+    height: 60px;
+    font-size: 1rem;
+  }
+  .todo-item {
+    font-size: 1rem;
+  }
+}
