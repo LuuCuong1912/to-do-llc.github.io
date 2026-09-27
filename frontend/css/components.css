@@ -2,6 +2,19 @@
    COMPONENTS — thành phần dùng chung cho mọi trang
    ===================================================================== */
 
+/* Icon SVG (sprite /assets/icons.svg — Lucide): kích thước theo cỡ chữ, màu theo màu chữ */
+.icon {
+  width: 1.1em;
+  height: 1.1em;
+  flex-shrink: 0;
+  vertical-align: -0.2em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .container {
   width: 100%;
   max-width: var(--container);

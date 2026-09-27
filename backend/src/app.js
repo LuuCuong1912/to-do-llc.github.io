@@ -23,8 +23,8 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         'script-src': ["'self'", 'https://cdn.jsdelivr.net'],
-        'style-src': ["'self'", 'https://fonts.googleapis.com'],
-        'font-src': ["'self'", 'https://fonts.gstatic.com'],
+        'style-src': ["'self'"],
+        'font-src': ["'self'"],
         'img-src': ["'self'", 'data:'],
         'form-action': ["'self'"],
       },

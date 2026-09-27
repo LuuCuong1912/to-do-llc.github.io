@@ -46,7 +46,7 @@ Tạo bằng lệnh `npm run db:seed-demo` (xem [Cài đặt](#cài-đặt-và-c
 | Thanh toán | VNPay sandbox (API 2.1.0) |
 | Kiểm thử | Vitest, Supertest |
 | Chất lượng code | ESLint, Prettier |
-| Icon | [Lucide](https://lucide.dev) (ISC), tự host dạng SVG sprite |
+| Icon, font | [Lucide](https://lucide.dev) (ISC) dạng SVG sprite · font Jost (OFL) tự host, không dùng CDN |
 
 ## Kiến trúc
 

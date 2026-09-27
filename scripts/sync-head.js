@@ -12,15 +12,19 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const frontend = path.join(root, 'frontend');
 const checkOnly = process.argv.includes('--check');
 
-const START = '<!-- @shared-head:start — tự sinh từ frontend/partials/head.html (npm run sync:head), đừng sửa tay -->';
+const START = '<!-- @shared-head:start — sửa ở frontend/partials/head.html rồi chạy npm run sync:head -->';
 const END = '<!-- @shared-head:end -->';
 const INDENT = '    ';
 
-const partial = fs
+// Chú thích <!-- ... --> và dòng trống trong file mẫu chỉ để giải thích → bỏ khi chép vào trang cho gọn
+const tags = fs
   .readFileSync(path.join(frontend, 'partials', 'head.html'), 'utf8')
   .replace(/\r\n/g, '\n')
-  .trim();
-const block = [START, ...partial.split('\n'), END].map((line) => (line ? INDENT + line : '')).join('\n');
+  .replace(/<!--[\s\S]*?-->/g, '')
+  .split('\n')
+  .map((line) => line.trim())
+  .filter(Boolean);
+const block = [START, ...tags, END].map((line) => INDENT + line).join('\n');
 
 const pages = [
   path.join(frontend, 'index.html'),
