@@ -6,16 +6,18 @@ test('thanh toán VNPay: chuyển sang VNPay → IPN tới trễ → trang kết
   await registerViaApi(page, 'vnpay');
   await addToCartViaApi(page, 'pro');
 
-  let paymentUrl;
-  await page.route('https://sandbox.vnpayment.vn/**', (route) => {
-    paymentUrl = new URL(route.request().url());
-    return route.abort();
-  });
+  // Trả về 1 trang "VNPay giả" (không chặn/abort): abort làm trình duyệt chuyển sang trang lỗi của Chrome,
+  // lần chuyển trang đó có thể chen ngang page.goto() bên dưới → test lúc đạt lúc lỗi.
+  await page.route('https://sandbox.vnpayment.vn/**', (route) =>
+    route.fulfill({ status: 200, contentType: 'text/html', body: '<h1>VNPay sandbox (giả lập)</h1>' }),
+  );
 
   await page.goto('/pages/checkout.html');
   await page.locator('.pay-method input[value="vnpay"]').check();
   await page.getByRole('button', { name: /Thanh toán/ }).click();
-  await expect.poll(() => paymentUrl?.searchParams.get('vnp_Amount')).toBe('9900000');
+  await page.waitForURL(/^https:\/\/sandbox\.vnpayment\.vn\//); // chờ trình duyệt ĐÃ ở trang VNPay
+  const paymentUrl = new URL(page.url());
+  expect(paymentUrl.searchParams.get('vnp_Amount')).toBe('9900000');
 
   const q = Object.fromEntries(paymentUrl.searchParams);
   const query = vnpaySignedQuery({

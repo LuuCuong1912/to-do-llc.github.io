@@ -1,0 +1,13 @@
+# Luôn dùng ký tự xuống dòng LF (cả trên Windows): Prettier, CI (Linux) và Docker nhất quán,
+# và hết cảnh báo "LF will be replaced by CRLF" khi commit.
+* text=auto eol=lf
+
+# File nhị phân: không bao giờ đổi nội dung
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.avif binary
+*.webp binary
+*.ico binary
+*.woff binary
+*.woff2 binary

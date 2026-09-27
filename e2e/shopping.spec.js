@@ -61,6 +61,7 @@ test('mua gói Gold và dùng Todo App', async ({ page }) => {
     await page.getByRole('link', { name: 'Dùng Todo App ngay' }).click();
     await expect(page.locator('.todo-app__plan')).toContainText('0 / 100 việc');
     const input = page.getByLabel('Nội dung công việc');
+    // Gõ nhanh 3 việc liên tiếp, KHÔNG chờ từng việc lưu xong (trước đây lần Enter thứ 2 bị bỏ qua khi DB chậm)
     for (const text of ['Học Express', 'Việc <img src=x onerror=alert(1)>', 'Viết README']) {
       await input.fill(text);
       await input.press('Enter');

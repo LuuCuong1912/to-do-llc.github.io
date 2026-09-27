@@ -125,16 +125,19 @@ async function handleDelete(todo) {
   }
 }
 
+// KHÔNG khóa ô nhập trong lúc chờ server: trước đây khóa nút → gõ nhanh nhấn Enter tiếp bị bỏ qua âm thầm.
+// Giờ: lấy nội dung + xóa ô ngay → gõ tiếp được; request lỗi thì trả lại nội dung vào ô (nếu ô đang trống) + báo lỗi.
+// Giới hạn số việc vẫn do server quyết định (có khóa chống gửi đồng thời).
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
   const text = input.value.trim();
   if (!text) return input.focus();
 
-  submit.disabled = true;
+  input.value = '';
   try {
     state.todos = [...state.todos, await store.createTodo(text)];
-    input.value = '';
   } catch (err) {
+    if (!input.value) input.value = text;
     showToast(err.message, 'error');
   }
   render();
