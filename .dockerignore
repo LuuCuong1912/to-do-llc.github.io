@@ -1,0 +1,21 @@
+# Chỉ gửi vào Docker những gì image cần (backend + frontend) → build nhanh, image nhỏ, không lộ bí mật
+**/node_modules
+**/.env
+**/.env.*
+!**/.env.example
+.git
+.github
+.claude
+.vscode
+guide
+plans
+docs
+e2e
+scripts
+playwright-report
+test-results
+backend/tests
+backend/requests
+backend/vitest*.config.js
+frontend/partials
+*.md

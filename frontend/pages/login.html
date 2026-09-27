@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đăng nhập — TodoPro</title>
+    <!-- @shared-head:start — tự sinh từ frontend/partials/head.html (npm run sync:head), đừng sửa tay -->
+    <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap" />
+
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/feedback.css" />
+
+    <!-- Module dùng ở MỌI trang: tải song song ngay từ đầu, không chờ trình duyệt đọc lần lượt từng import -->
+    <link rel="modulepreload" href="/js/config.js" />
+    <link rel="modulepreload" href="/js/api/http.js" />
+    <link rel="modulepreload" href="/js/api/auth.api.js" />
+    <link rel="modulepreload" href="/js/utils/dom.js" />
+    <link rel="modulepreload" href="/js/utils/auth-guard.js" />
+    <link rel="modulepreload" href="/js/components/navbar.js" />
+    <link rel="modulepreload" href="/js/components/toast.js" />
+    <!-- @shared-head:end -->
+    <link rel="stylesheet" href="/css/pages/auth.css" />
+  </head>
+  <body>
+    <header class="navbar" id="navbar"></header>
+
+    <main class="auth-page">
+      <section class="auth-card card" aria-labelledby="login-title">
+        <header class="auth-card__header">
+          <h1 class="auth-card__title" id="login-title">Đăng nhập</h1>
+          <p class="auth-card__subtitle">Chào mừng bạn quay lại TodoPro</p>
+        </header>
+
+        <!-- novalidate: tắt thông báo mặc định của trình duyệt, dùng thông báo tiếng Việt của mình -->
+        <form class="form" id="login-form" novalidate>
+          <p class="form-alert" role="alert"></p>
+
+          <div class="form-field">
+            <label class="form-label" for="email">Email</label>
+            <input
+              class="input"
+              id="email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              placeholder="ban@example.com"
+              required
+              aria-describedby="email-error"
+            />
+            <p class="field-error" id="email-error"></p>
+          </div>
+
+          <div class="form-field">
+            <label class="form-label" for="password">Mật khẩu</label>
+            <div class="input-wrap">
+              <input
+                class="input"
+                id="password"
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                placeholder="Nhập mật khẩu"
+                required
+                aria-describedby="password-error"
+              />
+              <button class="input-wrap__toggle" type="button" data-toggle-password aria-label="Hiện mật khẩu">
+                <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#eye"></use></svg>
+              </button>
+            </div>
+            <p class="field-error" id="password-error"></p>
+          </div>
+
+          <button class="btn btn--primary btn--block" type="submit">Đăng nhập</button>
+        </form>
+
+        <p class="auth-card__footer">
+          Chưa có tài khoản? <a id="register-link" href="/pages/register.html">Đăng ký ngay</a>
+        </p>
+      </section>
+    </main>
+
+    <script type="module" src="/js/pages/login.js"></script>
+  </body>
+</html>

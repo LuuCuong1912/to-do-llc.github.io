@@ -1,0 +1,23 @@
+{
+  "name": "todopro",
+  "private": true,
+  "description": "Công cụ kiểm tra chất lượng code dùng chung cho frontend/ và backend/",
+  "type": "module",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "sync:head": "node scripts/sync-head.js",
+    "check:head": "node scripts/sync-head.js --check",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.63.0",
+    "eslint": "^10.11.0",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.12.0",
+    "prettier": "^3.9.9"
+  }
+}

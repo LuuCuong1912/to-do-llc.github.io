@@ -1,0 +1,39 @@
+{
+  "name": "todopro-backend",
+  "version": "0.1.0",
+  "description": "TodoPro API - Express + MySQL (MVC)",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "db:setup": "node database/setup.js",
+    "db:reset": "node database/setup.js --reset",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "db:seed-demo": "node database/seed-demo.js",
+    "test:integration": "vitest run --config vitest.integration.config.js"
+  },
+  "type": "module",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "compression": "^1.8.2",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.4",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.7.0",
+    "helmet": "^8.3.0",
+    "joi": "^18.2.9",
+    "jsonwebtoken": "^9.0.3",
+    "mysql2": "^3.24.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14",
+    "supertest": "^7.3.0",
+    "vitest": "^5.0.2"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  }
+}

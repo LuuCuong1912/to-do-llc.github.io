@@ -1,0 +1,134 @@
+/* Lịch sử đơn hàng + Kết quả thanh toán */
+
+.order-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  list-style: none;
+}
+
+.order-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.order-card__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.order-card__code {
+  font-size: var(--text-lg);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.order-card__date {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.order-card__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--glass-border);
+}
+
+.order-items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  list-style: none;
+}
+
+.order-items li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.order-items__meta {
+  color: var(--color-text-muted);
+}
+
+.order-total {
+  font-size: var(--text-lg);
+  font-weight: 700;
+}
+
+/* ---------- Kết quả thanh toán ---------- */
+.result {
+  max-width: 560px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.result__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  margin-bottom: var(--space-4);
+  font-size: 2rem;
+  border-radius: 50%;
+}
+
+.result__icon--success {
+  color: var(--color-success);
+  background: rgba(74, 222, 128, 0.14);
+}
+
+.result__icon--danger {
+  color: var(--color-danger);
+  background: rgba(255, 122, 144, 0.14);
+}
+
+.result__icon--warning {
+  color: var(--color-warning);
+  background: rgba(251, 191, 36, 0.14);
+}
+
+.result__title {
+  font-size: var(--text-xl);
+}
+
+.result__desc {
+  margin-top: var(--space-2);
+  color: var(--color-text-muted);
+}
+
+.result__body {
+  margin-block: var(--space-5);
+  padding: var(--space-4);
+  text-align: left;
+  background: var(--glass-bg);
+  border-radius: var(--radius-md);
+}
+
+.result__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+/* Trang Thanh toán: danh sách gói */
+.checkout-items {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.checkout-items .order-items {
+  align-self: stretch;
+}

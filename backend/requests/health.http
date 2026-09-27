@@ -1,0 +1,15 @@
+# Dùng extension REST Client: bấm "Send Request" phía trên mỗi request
+
+@baseUrl = http://localhost:3000/api
+
+### Server còn sống?
+GET {{baseUrl}}/health
+
+### Route không tồn tại → 404 JSON
+GET {{baseUrl}}/khong-ton-tai
+
+### JSON sai định dạng → 400 INVALID_JSON
+POST {{baseUrl}}/health
+Content-Type: application/json
+
+{ "sai": json }
