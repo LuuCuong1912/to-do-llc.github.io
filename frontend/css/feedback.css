@@ -1,0 +1,149 @@
+/* =====================================================================
+   FEEDBACK — huy hiệu trạng thái, trạng thái trống, khung đang tải
+   ===================================================================== */
+
+/* ---------- Badge ---------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 2px var(--space-3);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.6;
+  white-space: nowrap;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+}
+
+.badge--success {
+  color: var(--color-success);
+  background: rgba(74, 222, 128, 0.14);
+  border-color: rgba(74, 222, 128, 0.35);
+}
+
+.badge--warning {
+  color: var(--color-warning);
+  background: rgba(251, 191, 36, 0.14);
+  border-color: rgba(251, 191, 36, 0.35);
+}
+
+.badge--danger {
+  color: var(--color-danger);
+  background: rgba(255, 122, 144, 0.14);
+  border-color: rgba(255, 122, 144, 0.35);
+}
+
+.badge--muted {
+  color: var(--color-text-muted);
+  background: var(--glass-bg);
+  border-color: var(--glass-border);
+}
+
+/* Huy hiệu gói: mỗi gói 1 màu */
+.badge--basic {
+  color: var(--color-info);
+  background: rgba(125, 211, 252, 0.14);
+  border-color: rgba(125, 211, 252, 0.35);
+}
+
+.badge--gold {
+  color: var(--color-gold);
+  background: rgba(251, 191, 36, 0.14);
+  border-color: rgba(251, 191, 36, 0.4);
+}
+
+.badge--pro {
+  color: #fff;
+  background: linear-gradient(135deg, var(--color-primary), #8b5cf6);
+}
+
+/* ---------- Trạng thái trống / lỗi ---------- */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-7) var(--space-4);
+  text-align: center;
+}
+
+.empty-state img {
+  width: min(220px, 60%);
+}
+
+.empty-state__title {
+  font-size: var(--text-lg);
+}
+
+.empty-state__desc {
+  max-width: 420px;
+  color: var(--color-text-muted);
+}
+
+.empty-state .btn {
+  margin-top: var(--space-2);
+}
+
+/* ---------- Đang tải ---------- */
+.skeleton {
+  border-radius: var(--radius-md);
+  background: linear-gradient(90deg, var(--glass-bg) 25%, rgba(255, 255, 255, 0.16) 50%, var(--glass-bg) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.page-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-8) var(--space-4);
+  color: var(--color-text-muted);
+}
+
+.page-loader::before {
+  content: '';
+  width: 22px;
+  height: 22px;
+  border: 3px solid var(--color-primary);
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+/* Huy hiệu bản dùng thử */
+.badge--trial {
+  color: var(--color-info);
+  background: rgba(125, 211, 252, 0.1);
+  border: 1px dashed rgba(125, 211, 252, 0.6);
+}
+
+/* ---------- Dải thông báo (vd: đang dùng thử) ---------- */
+.notice {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  background: rgba(125, 211, 252, 0.1);
+  border: 1px solid rgba(125, 211, 252, 0.4);
+  border-radius: var(--radius-sm);
+}
+
+.notice i {
+  margin-top: 3px;
+  color: var(--color-info);
+}
+
+.notice a {
+  color: var(--color-info);
+  font-weight: 600;
+  text-decoration: underline;
+}

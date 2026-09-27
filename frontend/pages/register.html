@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đăng ký — TodoPro</title>
+    <link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/components.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/pages/auth.css" />
+  </head>
+  <body>
+    <header class="navbar" id="navbar"></header>
+
+    <main class="auth-page">
+      <section class="auth-card card" aria-labelledby="register-title">
+        <header class="auth-card__header">
+          <h1 class="auth-card__title" id="register-title">Tạo tài khoản</h1>
+          <p class="auth-card__subtitle">Bắt đầu quản lý công việc với TodoPro</p>
+        </header>
+
+        <form class="form" id="register-form" novalidate>
+          <p class="form-alert" role="alert"></p>
+
+          <div class="form-field">
+            <label class="form-label" for="fullName">Họ và tên</label>
+            <input
+              class="input"
+              id="fullName"
+              name="fullName"
+              type="text"
+              autocomplete="name"
+              placeholder="Nguyễn Văn A"
+              maxlength="100"
+              required
+              aria-describedby="fullName-error"
+            />
+            <p class="field-error" id="fullName-error"></p>
+          </div>
+
+          <div class="form-field">
+            <label class="form-label" for="email">Email</label>
+            <input
+              class="input"
+              id="email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              placeholder="ban@example.com"
+              maxlength="255"
+              required
+              aria-describedby="email-error"
+            />
+            <p class="field-error" id="email-error"></p>
+          </div>
+
+          <div class="form-field">
+            <label class="form-label" for="password">Mật khẩu</label>
+            <div class="input-wrap">
+              <input
+                class="input"
+                id="password"
+                name="password"
+                type="password"
+                autocomplete="new-password"
+                placeholder="Tối thiểu 8 ký tự, có chữ và số"
+                maxlength="72"
+                required
+                aria-describedby="password-error"
+              />
+              <button class="input-wrap__toggle" type="button" data-toggle-password aria-label="Hiện mật khẩu">
+                <i class="fa-solid fa-eye" aria-hidden="true"></i>
+              </button>
+            </div>
+            <p class="field-error" id="password-error"></p>
+          </div>
+
+          <div class="form-field">
+            <label class="form-label" for="confirmPassword">Nhập lại mật khẩu</label>
+            <div class="input-wrap">
+              <input
+                class="input"
+                id="confirmPassword"
+                name="confirmPassword"
+                type="password"
+                autocomplete="new-password"
+                placeholder="Nhập lại mật khẩu"
+                maxlength="72"
+                required
+                aria-describedby="confirmPassword-error"
+              />
+              <button class="input-wrap__toggle" type="button" data-toggle-password aria-label="Hiện mật khẩu">
+                <i class="fa-solid fa-eye" aria-hidden="true"></i>
+              </button>
+            </div>
+            <p class="field-error" id="confirmPassword-error"></p>
+          </div>
+
+          <button class="btn btn--primary btn--block" type="submit">Tạo tài khoản</button>
+        </form>
+
+        <p class="auth-card__footer">Đã có tài khoản? <a id="login-link" href="/pages/login.html">Đăng nhập</a></p>
+      </section>
+    </main>
+
+    <script type="module" src="/js/pages/register.js"></script>
+  </body>
+</html>
