@@ -10,7 +10,8 @@
     "db:reset": "node database/setup.js --reset",
     "test": "vitest run",
     "test:watch": "vitest",
-    "db:seed-demo": "node database/seed-demo.js"
+    "db:seed-demo": "node database/seed-demo.js",
+    "test:integration": "vitest run --config vitest.integration.config.js"
   },
   "type": "module",
   "dependencies": {

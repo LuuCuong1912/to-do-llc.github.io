@@ -1,5 +1,7 @@
 # TodoPro — Website bán gói ứng dụng Todo
 
+[![CI](https://github.com/LuuCuong1912/to-do-llc.github.io/actions/workflows/ci.yml/badge.svg)](https://github.com/LuuCuong1912/to-do-llc.github.io/actions/workflows/ci.yml)
+
 Website thương mại điện tử bán gói dịch vụ **Basic / Gold / Pro** cho một ứng dụng Todo List. Người dùng đăng ký, chọn gói, thêm vào giỏ hàng, thanh toán qua **VNPay** (hoặc thanh toán giả lập để demo), và dùng Todo App với giới hạn tính năng theo gói đã mua.
 
 Backend viết theo **kiến trúc nhiều lớp (MVC mở rộng)**: `route → middleware → controller → service → model → MySQL`.
@@ -82,7 +84,20 @@ Sơ đồ CSDL (8 bảng) và lý do thiết kế: [docs/database.md](docs/datab
 - **Chống dò tài khoản**: đăng nhập sai email hay sai mật khẩu đều trả cùng thông báo và cùng thời gian phản hồi
 - **Chống Open Redirect**: tham số `?redirect=` chỉ nhận đường dẫn nội bộ
 
-## Cài đặt và chạy trên máy
+## Chạy nhanh bằng Docker (1 lệnh)
+
+**Yêu cầu:** Docker Desktop. Không cần cài Node.js hay MySQL.
+
+```bash
+docker compose up --build
+```
+
+Mở **http://localhost:8080** rồi đăng nhập `demo@todopro.vn` / `Demo@12345`. Lệnh trên dựng MySQL, tạo bảng, 3 gói và tài khoản demo, sau đó chạy server.
+
+- Tắt: `docker compose down`
+- Tắt và xóa dữ liệu: `docker compose down -v`
+
+## Cài đặt và chạy trên máy (để phát triển)
 
 **Yêu cầu:** Node.js 20+, MySQL 8, VS Code + extension Live Server
 
@@ -122,11 +137,26 @@ npm run dev
 | Thư mục | Lệnh | Tác dụng |
 |---|---|---|
 | `backend/` | `npm run dev` | Chạy server, tự khởi động lại khi sửa code |
-| `backend/` | `npm test` | Chạy 37 test (không cần MySQL) |
-| `backend/` | `npm run db:setup` | Tạo database / bảng / gói (chạy lại an toàn) |
+| `backend/` | `npm test` | Unit test (không cần MySQL) |
+| `backend/` | `npm run test:integration` | Test tích hợp với MySQL thật (tự dọn dữ liệu test) |
+| `backend/` | `npm run db:setup` | Tạo database / bảng / gói, đồng bộ index (chạy lại an toàn) |
 | `backend/` | `npm run db:reset` | Xóa sạch và tạo lại database (chỉ dev) |
 | `backend/` | `npm run db:seed-demo` | Tạo tài khoản demo |
+| gốc | `npm run test:e2e` | Test trên trình duyệt (Playwright, tự bật server cổng 3100) |
 | gốc | `npm run lint` / `npm run format` | ESLint / Prettier cho cả frontend và backend |
+| gốc | `npm run sync:head` | Chép phần `<head>` chung (`frontend/partials/head.html`) vào mọi trang |
+
+## Kiểm thử
+
+| Loại | Số lượng | Công cụ | Kiểm tra gì |
+|---|---|---|---|
+| Unit | 51 | Vitest (giả lập model) | Logic nghiệp vụ: giá, giới hạn gói, hết hạn đơn, chữ ký VNPay, chống CSRF |
+| Tích hợp | 28 | Vitest + Supertest + **MySQL thật** | API từ đầu đến DB: thanh toán đồng thời, gia hạn gói, IPN VNPay, giới hạn số việc |
+| E2E | 13 | **Playwright** + trình duyệt thật | Luồng người dùng: đăng ký, mua gói, VNPay, dùng thử, hủy đơn, điện thoại 375px |
+
+**CI (GitHub Actions)** chạy toàn bộ các test trên cùng ESLint và Prettier mỗi lần push, dùng MySQL 8.4 dựng trong CI.
+
+Trên máy cá nhân, lệnh `npm install` ở thư mục gốc sẽ cài Playwright; test E2E dùng Google Chrome có sẵn trên máy.
 
 ## Cấu trúc thư mục
 
@@ -134,6 +164,7 @@ npm run dev
 frontend/
 ├── index.html              Landing page
 ├── pages/                  login, register, cart, checkout, payment-result, orders, app (Todo)
+├── partials/head.html      Phần <head> dùng chung (npm run sync:head)
 ├── css/                    base (biến thiết kế) · components · layout · feedback · pages/
 └── js/
     ├── api/                Gọi Backend — http.js là nơi DUY NHẤT dùng fetch
@@ -146,8 +177,12 @@ backend/
 │   ├── services/payment/   mock · vnpay · methods
 │   ├── config/             env, db (pool + transaction)
 │   └── app.js, server.js
-├── database/               schema.sql, seed.sql, setup.js, seed-demo.js
-└── tests/                  unit/ (service), api/ (supertest)
+├── database/               schema.sql, seed.sql, setup.js, seed-demo.js, cleanup-test-users.js
+└── tests/                  unit/ (service) · api/ (supertest) · integration/ (MySQL thật)
+e2e/                        Test Playwright (*.spec.js)
+scripts/                    sync-head.js
+.github/workflows/ci.yml    CI: lint + unit + tích hợp + e2e
+Dockerfile, docker-compose.yml
 docs/                       database.md, api.md, deploy.md, screenshots/, postman/
 ```
 

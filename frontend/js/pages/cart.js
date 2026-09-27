@@ -3,7 +3,7 @@ import { initPage } from '../utils/auth-guard.js';
 import { updateCartBadge } from '../components/navbar.js';
 import { showToast } from '../components/toast.js';
 import { el, icon } from '../utils/dom.js';
-import { formatVND, MONTH_OPTIONS } from '../utils/format.js';
+import { formatVND } from '../utils/format.js';
 
 await initPage({ access: 'required' });
 const root = document.getElementById('cart-root');
@@ -29,11 +29,11 @@ const runAction = async (action, control) => {
   }
 };
 
-const cartItemRow = (item) => {
+const cartItemRow = (item, monthOptions) => {
   const monthSelect = el(
     'select',
     { class: 'select', 'aria-label': `Số tháng gói ${item.package.name}` },
-    MONTH_OPTIONS.map((m) => el('option', { value: m, selected: m === item.months }, `${m} tháng`)),
+    monthOptions.map((m) => el('option', { value: m, selected: m === item.months }, `${m} tháng`)),
   );
   monthSelect.addEventListener('change', () =>
     runAction(() => updateCartItem(item.id, { months: Number(monthSelect.value) }), monthSelect),
@@ -81,7 +81,16 @@ function render(cart) {
   if (cart.itemCount === 0) return root.replaceChildren(emptyState());
 
   root.replaceChildren(
-    el('div', { class: 'shop-layout' }, el('ul', { class: 'line-items' }, cart.items.map(cartItemRow)), summary(cart)),
+    el(
+      'div',
+      { class: 'shop-layout' },
+      el(
+        'ul',
+        { class: 'line-items' },
+        cart.items.map((item) => cartItemRow(item, cart.monthOptions)),
+      ),
+      summary(cart),
+    ),
   );
 }
 

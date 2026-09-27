@@ -6,8 +6,13 @@ export default [
   { ignores: ['**/node_modules/**', '.claude/**', 'guide/**', 'plans/**', 'coverage/**'] },
   js.configs.recommended,
   {
-    files: ['backend/**/*.js'],
+    files: ['backend/**/*.js', 'e2e/**/*.js', 'scripts/**/*.js', '*.config.js'],
     languageOptions: { globals: globals.node },
+  },
+  {
+    // Test Playwright: code trong page.evaluate() chạy trên trình duyệt
+    files: ['e2e/**/*.js'],
+    languageOptions: { globals: { ...globals.node, ...globals.browser } },
   },
   {
     files: ['frontend/**/*.js'],

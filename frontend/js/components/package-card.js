@@ -1,12 +1,13 @@
 import { el, icon } from '../utils/dom.js';
-import { formatVND, MONTH_OPTIONS } from '../utils/format.js';
+import { formatVND } from '../utils/format.js';
 import { setSubmitting } from '../utils/form.js';
 
 const POPULAR_CODE = 'gold';
 
 // Thẻ 1 gói trên bảng giá. onAddToCart(pkg, months) do trang gọi truyền vào.
-export const createPackageCard = (pkg, { isCurrent = false, onAddToCart }) => {
-  let months = MONTH_OPTIONS[0];
+// monthOptions: danh sách số tháng lấy từ API (GET /packages)
+export const createPackageCard = (pkg, { isCurrent = false, monthOptions, onAddToCart }) => {
+  let months = monthOptions[0];
 
   const total = el('p', { class: 'package-card__total', 'aria-live': 'polite' });
   const renderTotal = () => {
@@ -19,7 +20,7 @@ export const createPackageCard = (pkg, { isCurrent = false, onAddToCart }) => {
     'fieldset',
     { class: 'segmented' },
     el('legend', { class: 'sr-only' }, `Số tháng cho gói ${pkg.name}`),
-    MONTH_OPTIONS.map((value) =>
+    monthOptions.map((value) =>
       el(
         'label',
         { class: 'segmented__option' },

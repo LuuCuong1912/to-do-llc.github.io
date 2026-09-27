@@ -1,5 +1,7 @@
 # Deploy TodoPro
 
+> Muốn chạy thử trên máy mà không cài MySQL: `docker compose up --build` rồi mở http://localhost:8080 (xem README). Image trong `Dockerfile` cũng dùng được cho các nền tảng deploy bằng Docker (Render, Railway, Fly.io).
+
 Cách đơn giản và miễn phí (hoặc gần miễn phí): **1 dịch vụ Node.js trên Render** phục vụ cả API lẫn giao diện, kết hợp **MySQL trên cloud**.
 
 Vì Frontend và Backend chạy chung một tên miền:

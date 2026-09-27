@@ -24,7 +24,7 @@ backend/    # src/{config,routes,middlewares,validators,controllers,services,mod
 docs/       # database.md, api.md, deploy.md, postman/, screenshots/
 ```
 
-**Lệnh:** `backend/` → `npm run dev` · `npm test` (Vitest, không cần MySQL) · `npm run db:setup` · `npm run db:seed-demo`. Thư mục gốc → `npm run lint` · `npm run format`.
+**Lệnh:** `backend/` → `npm run dev` · `npm test` (unit, không cần MySQL) · `npm run test:integration` (MySQL thật) · `npm run db:setup` · `npm run db:seed-demo`. Thư mục gốc → `npm run lint` · `npm run format` · `npm run test:e2e` (Playwright) · `npm run sync:head` (sau khi sửa `frontend/partials/head.html`). Docker: `docker compose up --build` → http://localhost:8080.
 Frontend chạy bằng Live Server (root `/frontend`, `127.0.0.1:5500`). Terminal dùng **Git Bash** (PowerShell chặn `npm.ps1`).
 Tài khoản demo: `demo@todopro.vn` / `Demo@12345` (gói Pro).
 

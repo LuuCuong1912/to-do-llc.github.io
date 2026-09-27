@@ -1,0 +1,42 @@
+# Chạy toàn bộ TodoPro bằng 1 lệnh — không cần cài MySQL, không cần sửa .env:
+#   docker compose up --build        → mở http://localhost:8080   (demo@todopro.vn / Demo@12345)
+#   docker compose down              → tắt   ·   docker compose down -v → tắt + xóa dữ liệu
+#
+# Mật khẩu bên dưới CHỈ dùng cho bản chạy thử trên máy cá nhân. Không dùng cho server thật.
+services:
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_ROOT_PASSWORD: todopro-root-local
+      MYSQL_DATABASE: todopro
+      MYSQL_USER: todopro
+      MYSQL_PASSWORD: todopro-local
+    volumes:
+      - db-data:/var/lib/mysql
+    # Không mở cổng 3306 ra máy thật → không đụng MySQL đang cài sẵn trên máy
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', '127.0.0.1', '-uroot', '-ptodopro-root-local']
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  app:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy # chờ MySQL sẵn sàng rồi mới chạy app
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: todopro
+      DB_PASSWORD: todopro-local
+      DB_NAME: todopro
+      JWT_SECRET: docker-local-only-secret-change-me-in-production
+      CLIENT_URL: http://localhost:8080
+      PAYMENT_MOCK_ENABLED: 'true'
+    ports:
+      # 8080 bên ngoài → 3000 bên trong. Không dùng 3000 để không trùng với "npm run dev"
+      - '8080:3000'
+
+volumes:
+  db-data:

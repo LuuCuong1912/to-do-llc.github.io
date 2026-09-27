@@ -20,3 +20,7 @@ Thumbs.db
 # Build / test output
 coverage/
 dist/
+
+# Kết quả test Playwright
+playwright-report/
+test-results/

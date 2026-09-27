@@ -220,4 +220,15 @@ Kiểm chứng: 51/51 unit test · trình duyệt: đăng nhập 23/23, mua hàn
 
 **Còn lại (đề xuất tiếp):** Google Fonts (Jost) vẫn là CSS ngoài chặn render. Lần tải đầu, `/auth/me` bắt đầu ở ~445 ms (trước là 620 ms). Tự host font Jost (`woff2`, chỉ bộ ký tự Latin + tiếng Việt) sẽ bỏ nốt phụ thuộc CDN này.
 
-### ⏳ Đợt 3 — chưa làm
+### ✅ Đợt 3 — hoàn thành (2026-09-27)
+
+| Mục | Đã làm | Kiểm chứng |
+|---|---|---|
+| **M2** Hằng số một nguồn | `backend/src/config/catalog.js` (`ALLOWED_MONTHS`). API trả `monthOptions` ở `GET /packages` và trong giỏ hàng; Frontend bỏ `MONTH_OPTIONS` tự khai báo | Test tích hợp kiểm tra `monthOptions`; e2e chọn số tháng |
+| **M1** `<head>` dùng chung | `frontend/partials/head.html` + `scripts/sync-head.js` (`npm run sync:head` / `check:head`), chép vào giữa dấu `@shared-head` của 8 trang, không cần bước build. Kèm `modulepreload` 7 module dùng chung (P5) | Cố ý sửa lệch 1 trang → `check:head` báo lỗi, `sync:head` sửa lại |
+| **T2** Test tích hợp | `backend/tests/integration/` (28 test, Supertest + MySQL thật, email `@it.test`, tự dọn), `npm run test:integration` | 28/28 trên DB dev, không sót user test |
+| **T2** E2E | Playwright ở thư mục gốc, `e2e/` (13 test), tự bật server chế độ deploy ở cổng 3100 với khóa VNPay giả; máy cá nhân dùng Chrome có sẵn, CI dùng Chromium; `e2e/global-teardown.js` dọn email `@e2e.test` | 13/13 |
+| **T1** CI | `.github/workflows/ci.yml`: job `quality` (lint, format, check:head) + job `test` (unit → db:setup → tích hợp → Playwright) với service `mysql:8.4`; lưu báo cáo Playwright khi lỗi | YAML hợp lệ. Từng bước đã chạy trên máy. **Chưa chạy trên GitHub** (chưa push) |
+| **T3** Docker | `Dockerfile` (node:22-slim, user `node`, `npm ci --omit=dev`), `.dockerignore`, `docker-compose.yml` (MySQL 8.4 + healthcheck, app ở cổng **8080**, không mở 3306) | Build 350 MB; `docker compose up` → tự tạo bảng + demo; đăng nhập được trên Chrome; khởi động lại không tạo trùng demo |
+
+Tổng số test: **51 unit + 28 tích hợp + 13 e2e = 92**.

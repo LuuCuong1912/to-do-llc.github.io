@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { ALLOWED_MONTHS } from '../services/cart.service.js';
+import { ALLOWED_MONTHS } from '../config/catalog.js';
 
 const months = Joi.number()
   .integer()

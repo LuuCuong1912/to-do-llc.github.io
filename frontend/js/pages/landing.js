@@ -1,4 +1,4 @@
-import { getPackages } from '../api/package.api.js';
+import { getCatalog } from '../api/package.api.js';
 import { addToCart } from '../api/cart.api.js';
 import { initPage, redirectToLogin } from '../utils/auth-guard.js';
 import { createPackageCard } from '../components/package-card.js';
@@ -9,7 +9,7 @@ import { el } from '../utils/dom.js';
 // Bảng giá không phụ thuộc đăng nhập → gọi /packages NGAY, song song với /auth/me trong initPage()
 // thay vì chờ /auth/me xong mới gọi (tiết kiệm 1 lượt mạng). .catch() rỗng: tránh cảnh báo "lỗi chưa xử lý"
 // nếu request lỗi trong lúc chờ initPage — lỗi vẫn được bắt ở loadPricing() bên dưới.
-const packagesRequest = getPackages();
+const packagesRequest = getCatalog();
 packagesRequest.catch(() => {});
 
 const session = await initPage({ access: 'public' });
@@ -48,18 +48,19 @@ const renderError = (message) => {
       { class: 'empty-state card pricing-status' },
       el('p', { class: 'empty-state__title' }, 'Không tải được bảng giá'),
       el('p', { class: 'empty-state__desc' }, message),
-      el('button', { type: 'button', class: 'btn btn--primary', onClick: () => loadPricing(getPackages()) }, 'Thử lại'),
+      el('button', { type: 'button', class: 'btn btn--primary', onClick: () => loadPricing(getCatalog()) }, 'Thử lại'),
     ),
   );
 };
 
 async function loadPricing(request) {
   try {
-    const packages = await request;
+    const { packages, monthOptions } = await request;
     grid.replaceChildren(
       ...packages.map((pkg) =>
         createPackageCard(pkg, {
           isCurrent: session?.currentPlan?.code === pkg.code,
+          monthOptions,
           onAddToCart: handleAddToCart,
         }),
       ),

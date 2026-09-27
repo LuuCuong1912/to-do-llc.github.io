@@ -2,8 +2,7 @@ import pool from '../config/db.js';
 import ApiError from '../utils/ApiError.js';
 import * as cartModel from '../models/cart.model.js';
 import * as packageModel from '../models/package.model.js';
-
-export const ALLOWED_MONTHS = [1, 3, 6, 12];
+import { ALLOWED_MONTHS } from '../config/catalog.js';
 
 const toCartItem = (row) => ({
   id: row.id,
@@ -23,8 +22,11 @@ export const buildCart = (rows) => {
   };
 };
 
-export const getCart = async (userId, { db = pool, lock = false } = {}) =>
-  buildCart(await cartModel.findByUser(userId, { db, lock }));
+// Kèm monthOptions để Frontend vẽ ô chọn số tháng — không tự khai báo danh sách này
+export const getCart = async (userId, { db = pool, lock = false } = {}) => ({
+  ...buildCart(await cartModel.findByUser(userId, { db, lock })),
+  monthOptions: ALLOWED_MONTHS,
+});
 
 export const addItem = async (userId, { packageId, months }) => {
   const pkg = await packageModel.findActiveById(packageId);
