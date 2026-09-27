@@ -7,7 +7,10 @@
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
     "db:setup": "node database/setup.js",
-    "db:reset": "node database/setup.js --reset"
+    "db:reset": "node database/setup.js --reset",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "db:seed-demo": "node database/seed-demo.js"
   },
   "type": "module",
   "dependencies": {
@@ -23,7 +26,9 @@
     "mysql2": "^3.24.4"
   },
   "devDependencies": {
-    "nodemon": "^3.1.14"
+    "nodemon": "^3.1.14",
+    "supertest": "^7.3.0",
+    "vitest": "^5.0.2"
   },
   "private": true,
   "engines": {

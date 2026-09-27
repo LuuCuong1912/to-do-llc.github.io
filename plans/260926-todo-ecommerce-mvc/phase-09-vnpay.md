@@ -6,7 +6,7 @@
 
 - [ ] Đăng ký tài khoản merchant sandbox tại trang VNPay dành cho nhà phát triển. Bạn sẽ nhận `vnp_TmnCode`, `vnp_HashSecret`, URL sandbox và thẻ ngân hàng test
 - [ ] Đọc tài liệu chính thức: "Thanh toán PAY", "Return URL", "IPN URL", "Mã lỗi"
-- [ ] Thêm vào `.env`: `VNP_TMN_CODE`, `VNP_HASH_SECRET`, `VNP_URL`, `VNP_RETURN_URL`
+- [x] Thêm vào `.env.example` (người dùng tự điền `.env`): `VNP_TMN_CODE`, `VNP_HASH_SECRET`, `VNP_URL`, `VNP_RETURN_URL`
 
 ## Luồng VNPay
 
@@ -24,13 +24,13 @@ checkout.html chọn "VNPay"
 
 ## Backend
 
-- [ ] `services/payment/vnpay.service.js`:
+- [x] `services/payment/vnpay.service.js`:
   - `createPaymentUrl(order, ipAddr)`: sắp xếp tham số theo alphabet, ký HMAC-SHA512 bằng `crypto` có sẵn của Node
   - `verifySignature(query)`
   - `handleIpn(query)`: **dùng lại** logic "đánh dấu đã trả tiền + kích hoạt gói" của giai đoạn 7. Tách logic đó thành `orderService.markPaid(orderId, paymentInfo)` để mock và VNPay dùng chung
-- [ ] Số tiền gửi VNPay = `total_amount * 100` (theo quy định của VNPay)
-- [ ] Ghi `raw_response` vào bảng `payments` để đối soát
-- [ ] Xử lý các trường hợp: đơn không tồn tại, sai số tiền, đã xử lý rồi, chữ ký sai (trả `RspCode` đúng cho từng trường hợp)
+- [x] Số tiền gửi VNPay = `total_amount * 100` (theo quy định của VNPay)
+- [x] Ghi `raw_response` vào bảng `payments` để đối soát
+- [x] Xử lý các trường hợp: đơn không tồn tại, sai số tiền, đã xử lý rồi, chữ ký sai (trả `RspCode` đúng cho từng trường hợp)
 
 ## Chạy thử IPN trên máy cá nhân
 
@@ -42,3 +42,13 @@ checkout.html chọn "VNPay"
 - Thanh toán bằng thẻ test thành công → đơn `paid`, gói được kích hoạt
 - Hủy thanh toán trên trang VNPay → đơn `failed`, giỏ hàng vẫn còn để thử lại
 - Sửa tay tham số `vnp_Amount` trên URL return → bị từ chối vì sai chữ ký
+
+## Ghi chú khi thực hiện (2026-09-26)
+
+- Mỗi lần bấm thanh toán VNPay = 1 dòng `payments` (pending) với `transaction_ref` = mã đơn + 4 ký tự → IPN tìm đơn qua dòng này; thử lại nhiều lần không trùng mã
+- `verifySignature`: chỉ lấy tham số `vnp_*`, bỏ `vnp_SecureHash(Type)`, so sánh bằng `crypto.timingSafeEqual`
+- `VNP_CONFIRM_ON_RETURN=true` (chỉ dev): xác nhận đơn ở Return URL khi VNPay không gọi được IPN vào localhost
+- Trang kết quả: vừa từ VNPay về mà đơn còn pending → hỏi lại tối đa 5 lần (mỗi 2 giây) chờ IPN
+- VNPay tự ẩn khi chưa cấu hình `VNP_TMN_CODE` / `VNP_HASH_SECRET` / `VNP_RETURN_URL`
+- **Đã kiểm tra bằng khóa giả** (chữ ký đối chiếu với cách ký độc lập theo code mẫu VNPay): IPN 00 / 01 / 02 / 04 / 97, hủy thanh toán → đơn failed + giỏ còn nguyên, Return URL chữ ký giả → `gateway=invalid`
+- ⏳ **Còn lại (cần người dùng):** đăng ký sandbox thật, điền `.env`, thử bằng thẻ test NCB

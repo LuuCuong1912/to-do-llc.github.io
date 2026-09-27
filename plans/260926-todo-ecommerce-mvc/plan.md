@@ -200,13 +200,13 @@ Làm **theo thứ tự**. Xong giai đoạn nào thì chạy thử được giai
 | 1 | Dựng khung Backend (Express + MVC) | [phase-01](phase-01-backend-skeleton.md) | ✅ |
 | 2 | Cơ sở dữ liệu MySQL | [phase-02](phase-02-database.md) | ✅ |
 | 3 | Đăng ký / Đăng nhập (Backend) | [phase-03](phase-03-auth-backend.md) | ✅ |
-| 4 | Nền tảng Frontend + trang Đăng nhập/Đăng ký | [phase-04](phase-04-frontend-foundation.md) | ⬜ |
-| 5 | Landing page + API gói | [phase-05](phase-05-landing-packages.md) | ⬜ |
-| 6 | Giỏ hàng | [phase-06](phase-06-cart.md) | ⬜ |
-| 7 | Đơn hàng + thanh toán giả lập | [phase-07](phase-07-orders-mock-payment.md) | ⬜ |
-| 8 | Todo App theo gói | [phase-08](phase-08-todo-app.md) | ⬜ |
-| 9 | Tích hợp VNPay sandbox | [phase-09](phase-09-vnpay.md) | ⬜ |
-| 10 | Test, tài liệu, deploy, đưa vào CV | [phase-10](phase-10-polish-deploy.md) | ⬜ |
+| 4 | Nền tảng Frontend + trang Đăng nhập/Đăng ký | [phase-04](phase-04-frontend-foundation.md) | ✅ |
+| 5 | Landing page + API gói | [phase-05](phase-05-landing-packages.md) | ✅ |
+| 6 | Giỏ hàng | [phase-06](phase-06-cart.md) | ✅ |
+| 7 | Đơn hàng + thanh toán giả lập | [phase-07](phase-07-orders-mock-payment.md) | ✅ |
+| 8 | Todo App theo gói | [phase-08](phase-08-todo-app.md) | ✅ |
+| 9 | Tích hợp VNPay sandbox | [phase-09](phase-09-vnpay.md) | ✅ (chờ mã sandbox thật) |
+| 10 | Test, tài liệu, deploy, đưa vào CV | [phase-10](phase-10-polish-deploy.md) | ✅ (chờ deploy) |
 
 **Mốc quan trọng:** hết giai đoạn 7 là đã có một website e-commerce **chạy trọn vẹn** (đăng ký → xem gói → giỏ → thanh toán). Giai đoạn 8 đến 10 giúp dự án nổi bật hơn trên CV.
 
