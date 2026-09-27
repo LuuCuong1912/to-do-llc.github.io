@@ -1,3 +1,5 @@
+import { setIcon } from './dom.js';
+
 // Tiện ích dùng chung cho mọi form (đăng nhập, đăng ký, và các form sau này)
 
 // Lấy dữ liệu form thành object: { email: '...', password: '...' }
@@ -62,14 +64,13 @@ export const setSubmitting = (button, isSubmitting, loadingText = 'Đang xử l�
 export const bindPasswordToggles = (root = document) => {
   root.querySelectorAll('[data-toggle-password]').forEach((button) => {
     const input = button.parentElement.querySelector('input');
-    const icon = button.querySelector('i');
+    const eyeIcon = button.querySelector('svg');
 
     button.addEventListener('click', () => {
       const isHidden = input.type === 'password';
       input.type = isHidden ? 'text' : 'password';
       button.setAttribute('aria-label', isHidden ? 'Ẩn mật khẩu' : 'Hiện mật khẩu');
-      icon?.classList.toggle('fa-eye', !isHidden);
-      icon?.classList.toggle('fa-eye-slash', isHidden);
+      if (eyeIcon) setIcon(eyeIcon, isHidden ? 'eye-off' : 'eye');
     });
   });
 };

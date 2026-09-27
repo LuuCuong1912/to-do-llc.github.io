@@ -1,0 +1,111 @@
+/* Todo App — danh sách công việc (từng dòng, nút sửa/xóa, sửa tại chỗ) */
+
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  list-style: none;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  font-size: 1.1rem;
+  background: rgba(255, 194, 209, 0.3);
+  border-radius: 30px;
+  transition: background var(--transition);
+}
+
+.todo-item__check {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  cursor: pointer;
+  appearance: none;
+  transition:
+    background var(--transition),
+    transform var(--transition);
+}
+
+.todo-item__check:checked {
+  background: var(--color-primary);
+  transform: scale(1.1);
+}
+
+.todo-item__check:checked::before {
+  content: '\2713';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 0.8rem;
+}
+
+.todo-item__text {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.todo-item.is-completed .todo-item__text {
+  text-decoration: line-through 2px;
+  opacity: 0.6;
+}
+
+.todo-item__edit {
+  flex: 1;
+  min-height: 32px;
+  padding: 0 var(--space-3);
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-pill);
+  outline: none;
+}
+
+.todo-item__actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.todo-item__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  font-size: 0.8rem;
+  border-radius: 50%;
+  transition: transform var(--transition);
+}
+
+.todo-item__btn:hover:not(:disabled) {
+  transform: scale(1.15);
+}
+
+.todo-item__btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.todo-item__btn--edit {
+  background: #d99a00;
+}
+
+.todo-item__btn--delete {
+  background: var(--color-primary);
+}
+
+.todo-empty {
+  width: min(260px, 70%);
+  margin-inline: auto;
+}
+
+@media (max-width: 480px) {
+  .todo-item {
+    font-size: 1rem;
+  }
+}

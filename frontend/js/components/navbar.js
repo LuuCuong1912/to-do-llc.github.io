@@ -1,4 +1,4 @@
-import { el } from '../utils/dom.js';
+import { el, icon } from '../utils/dom.js';
 import { logout } from '../api/auth.api.js';
 import { showToast, setFlashToast } from './toast.js';
 
@@ -13,14 +13,14 @@ const handleLogout = async () => {
 };
 
 // Đánh dấu link của trang đang mở (aria-current) để người dùng biết mình ở đâu
-const navLink = (href, label, icon) =>
+const navLink = (href, label, iconName) =>
   el(
     'li',
     {},
     el(
       'a',
       { class: 'navbar__link', href, 'aria-current': window.location.pathname === href ? 'page' : false },
-      icon && el('i', { class: `fa-solid ${icon}`, 'aria-hidden': 'true' }),
+      iconName && icon(iconName),
       label,
     ),
   );
@@ -43,7 +43,7 @@ const cartLink = (count) =>
         href: '/pages/cart.html',
         'aria-current': window.location.pathname === '/pages/cart.html' ? 'page' : false,
       },
-      el('i', { class: 'fa-solid fa-cart-shopping', 'aria-hidden': 'true' }),
+      icon('cart'),
       'Giỏ hàng',
       el('span', { class: 'navbar__badge', id: 'cart-badge', hidden: count === 0 }, String(count)),
     ),
@@ -51,8 +51,8 @@ const cartLink = (count) =>
 
 // fullName là dữ liệu người dùng nhập → el() đưa vào dạng text, an toàn
 const userItems = ({ user, currentPlan, cartCount = 0 }) => [
-  navLink('/pages/app.html', 'Todo App', 'fa-list-check'),
-  navLink('/pages/orders.html', 'Đơn hàng', 'fa-receipt'),
+  navLink('/pages/app.html', 'Todo App', 'list-checks'),
+  navLink('/pages/orders.html', 'Đơn hàng', 'receipt'),
   cartLink(cartCount),
   el(
     'li',
@@ -65,12 +65,7 @@ const userItems = ({ user, currentPlan, cartCount = 0 }) => [
   el(
     'li',
     {},
-    el(
-      'button',
-      { type: 'button', class: 'btn btn--ghost', onClick: handleLogout },
-      el('i', { class: 'fa-solid fa-right-from-bracket', 'aria-hidden': 'true' }),
-      'Đăng xuất',
-    ),
+    el('button', { type: 'button', class: 'btn btn--ghost', onClick: handleLogout }, icon('log-out'), 'Đăng xuất'),
   ),
 ];
 
@@ -103,19 +98,14 @@ export const renderNavbar = (session) => {
         toggle.setAttribute('aria-label', isOpen ? 'Đóng menu' : 'Mở menu');
       },
     },
-    el('i', { class: 'fa-solid fa-bars', 'aria-hidden': 'true' }),
+    icon('menu'),
   );
 
   header.replaceChildren(
     el(
       'nav',
       { class: 'navbar__inner container', 'aria-label': 'Điều hướng chính' },
-      el(
-        'a',
-        { class: 'navbar__brand', href: '/' },
-        el('i', { class: 'fa-solid fa-list-check', 'aria-hidden': 'true' }),
-        'TodoPro',
-      ),
+      el('a', { class: 'navbar__brand', href: '/' }, icon('list-checks'), 'TodoPro'),
       toggle,
       menu,
     ),

@@ -1,9 +1,9 @@
-import { el } from '../utils/dom.js';
+import { el, icon } from '../utils/dom.js';
 
 const ICONS = {
-  success: 'fa-circle-check',
-  error: 'fa-circle-exclamation',
-  info: 'fa-circle-info',
+  success: 'circle-check',
+  error: 'circle-alert',
+  info: 'info',
 };
 
 const getContainer = () => {
@@ -21,7 +21,7 @@ export const showToast = (message, type = 'info', duration = 3500) => {
   const toast = el(
     'div',
     { class: `toast toast--${type}`, role: type === 'error' ? 'alert' : 'status' },
-    el('i', { class: `fa-solid ${ICONS[type] ?? ICONS.info}`, 'aria-hidden': 'true' }),
+    icon(ICONS[type] ?? ICONS.info),
     el('span', {}, message),
   );
 

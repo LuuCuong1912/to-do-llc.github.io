@@ -4,7 +4,7 @@ import { initPage } from '../utils/auth-guard.js';
 import { renderNavbar } from '../components/navbar.js';
 import { showToast } from '../components/toast.js';
 import { orderItemsList } from '../components/order-summary.js';
-import { el } from '../utils/dom.js';
+import { el, icon } from '../utils/dom.js';
 import { formatVND, formatDateTime } from '../utils/format.js';
 import { setSubmitting } from '../utils/form.js';
 import { startPayment } from '../utils/payment-flow.js';
@@ -20,21 +20,21 @@ if (params.get('gateway') === 'invalid') {
 }
 
 const VIEWS = {
-  paid: { icon: 'fa-check', tone: 'success', title: 'Thanh toán thành công', desc: 'Gói của bạn đã được kích hoạt.' },
+  paid: { icon: 'check', tone: 'success', title: 'Thanh toán thành công', desc: 'Gói của bạn đã được kích hoạt.' },
   failed: {
-    icon: 'fa-xmark',
+    icon: 'x',
     tone: 'danger',
     title: 'Thanh toán không thành công',
     desc: 'Giỏ hàng của bạn vẫn được giữ nguyên, bạn có thể đặt lại.',
   },
   pending: {
-    icon: 'fa-clock',
+    icon: 'clock',
     tone: 'warning',
     title: 'Đơn hàng đang chờ thanh toán',
     desc: 'Nếu bạn đã thanh toán, hệ thống sẽ cập nhật sau ít giây.',
   },
   cancelled: {
-    icon: 'fa-ban',
+    icon: 'ban',
     tone: 'danger',
     title: 'Đơn hàng đã hủy',
     desc: 'Đơn đã bị hủy hoặc quá hạn thanh toán. Giỏ hàng của bạn vẫn còn, bạn có thể đặt lại.',
@@ -73,11 +73,7 @@ const render = (order) => {
     el(
       'section',
       { class: 'result card', 'data-status': order.status },
-      el(
-        'span',
-        { class: `result__icon result__icon--${view.tone}` },
-        el('i', { class: `fa-solid ${view.icon}`, 'aria-hidden': 'true' }),
-      ),
+      el('span', { class: `result__icon result__icon--${view.tone}` }, icon(view.icon)),
       el('h1', { class: 'result__title' }, view.title),
       el('p', { class: 'result__desc' }, view.desc),
       el(

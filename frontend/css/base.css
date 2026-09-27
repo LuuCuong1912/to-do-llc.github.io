@@ -71,12 +71,41 @@ body {
   line-height: 1.6;
   color: var(--color-text);
   background-color: #1a1024;
-  /* Lớp phủ tối để chữ trắng luôn đọc rõ trên ảnh nền */
+}
+
+/* Ảnh nền đứng yên khi cuộn. Dùng lớp position: fixed thay cho background-attachment: fixed
+   (cách cũ bắt trình duyệt vẽ lại nền mỗi lần cuộn → giật trên điện thoại; iOS Safari còn bỏ qua). */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  /* Lớp phủ tối để chữ trắng luôn đọc rõ trên ảnh nền.
+     Dòng url(...jpg) là dự phòng cho trình duyệt cũ không hiểu image-set(). */
   background-image:
     linear-gradient(rgba(16, 8, 28, 0.55), rgba(16, 8, 28, 0.78)), url('../assets/images/background.jpg');
+  background-image:
+    linear-gradient(rgba(16, 8, 28, 0.55), rgba(16, 8, 28, 0.78)),
+    image-set(
+      url('../assets/images/background.avif') type('image/avif'),
+      url('../assets/images/background.webp') type('image/webp'),
+      url('../assets/images/background.jpg') type('image/jpeg')
+    );
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
+}
+
+/* Điện thoại: ảnh 720px (~16 KB) thay vì 1200px */
+@media (max-width: 720px) {
+  body::before {
+    background-image:
+      linear-gradient(rgba(16, 8, 28, 0.55), rgba(16, 8, 28, 0.78)),
+      image-set(
+        url('../assets/images/background-720.avif') type('image/avif'),
+        url('../assets/images/background-720.webp') type('image/webp'),
+        url('../assets/images/background.jpg') type('image/jpeg')
+      );
+  }
 }
 
 img,
@@ -134,4 +163,17 @@ button {
     transition: none !important;
     animation: none !important;
   }
+}
+
+/* Icon SVG (sprite /assets/icons.svg — Lucide): kích thước theo cỡ chữ, màu theo màu chữ */
+.icon {
+  width: 1.1em;
+  height: 1.1em;
+  flex-shrink: 0;
+  vertical-align: -0.2em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }

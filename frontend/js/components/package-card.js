@@ -1,4 +1,4 @@
-import { el } from '../utils/dom.js';
+import { el, icon } from '../utils/dom.js';
 import { formatVND, MONTH_OPTIONS } from '../utils/format.js';
 import { setSubmitting } from '../utils/form.js';
 
@@ -82,9 +82,7 @@ export const createPackageCard = (pkg, { isCurrent = false, onAddToCart }) => {
     el(
       'ul',
       { class: 'package-card__features' },
-      pkg.features.map((feature) =>
-        el('li', {}, el('i', { class: 'fa-solid fa-check', 'aria-hidden': 'true' }), el('span', {}, feature)),
-      ),
+      pkg.features.map((feature) => el('li', {}, icon('check'), el('span', {}, feature))),
     ),
   );
 };

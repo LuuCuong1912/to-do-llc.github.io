@@ -1,4 +1,4 @@
-import { el } from '../utils/dom.js';
+import { el, icon } from '../utils/dom.js';
 
 // 1 dòng công việc. Nội dung hiển thị bằng textContent (qua el()) → không bị XSS như app cũ (innerHTML).
 // handlers: { onToggle(todo, completed), onSave(todo, text), onDelete(todo) } — đều là hàm async
@@ -31,13 +31,13 @@ export const createTodoItem = (todo, { canEdit, onToggle, onSave, onDelete }) =>
       title: editTitle,
       'aria-label': `${editTitle}: ${todo.text}`,
     },
-    el('i', { class: 'fa-solid fa-pen', 'aria-hidden': 'true' }),
+    icon('pencil'),
   );
 
   const deleteButton = el(
     'button',
     { type: 'button', class: 'todo-item__btn todo-item__btn--delete', 'aria-label': `Xóa: ${todo.text}` },
-    el('i', { class: 'fa-solid fa-trash', 'aria-hidden': 'true' }),
+    icon('trash'),
   );
   deleteButton.addEventListener('click', async () => {
     deleteButton.disabled = true;

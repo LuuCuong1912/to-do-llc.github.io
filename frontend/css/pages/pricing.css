@@ -118,7 +118,7 @@
   gap: var(--space-2);
 }
 
-.package-card__features i {
+.package-card__features .icon {
   margin-top: 5px;
   color: var(--color-success);
 }

@@ -3,7 +3,7 @@ import * as trialStore from '../api/trial-todo.store.js';
 import { initPage } from '../utils/auth-guard.js';
 import { showToast } from '../components/toast.js';
 import { createTodoItem } from '../components/todo-item.js';
-import { el } from '../utils/dom.js';
+import { el, icon } from '../utils/dom.js';
 import { formatDate } from '../utils/format.js';
 import { celebrate } from '../utils/confetti.js';
 
@@ -35,7 +35,7 @@ const input = el('input', {
 const submit = el(
   'button',
   { type: 'submit', class: 'btn btn--primary todo-form__submit', 'aria-label': 'Thêm công việc' },
-  el('i', { class: 'fa-solid fa-plus', 'aria-hidden': 'true' }),
+  icon('plus'),
 );
 const form = el('form', { class: 'todo-form' }, input, submit);
 
@@ -74,34 +74,49 @@ const replaceTodo = (updated) => {
 };
 
 // ---------- Xử lý thao tác ----------
-async function handleToggle(todo, completed) {
-  try {
-    replaceTodo(await store.updateTodo(todo.id, { completed }));
-    const allDone = state.todos.length > 0 && state.todos.every((t) => t.completed);
-    if (completed && allDone && state.plan.tier >= CONFETTI_MIN_TIER) celebrate();
-  } catch (err) {
-    showToast(err.message, 'error');
-  }
+// CẬP NHẬT LẠC QUAN: đổi giao diện NGAY rồi mới gửi request → người dùng không phải chờ mạng.
+// Request lỗi → trả lại ĐÚNG việc đó về như cũ (không khôi phục cả danh sách, để không làm mất
+// thay đổi của các thao tác khác đang chạy song song) và báo lỗi.
+const rollback = (err, undo) => {
+  undo();
   render();
+  showToast(err.message, 'error');
+};
+
+async function handleToggle(todo, completed) {
+  replaceTodo({ ...todo, completed });
+  render();
+  const allDone = state.todos.length > 0 && state.todos.every((t) => t.completed);
+  if (completed && allDone && state.plan.tier >= CONFETTI_MIN_TIER) celebrate();
+
+  try {
+    await store.updateTodo(todo.id, { completed });
+  } catch (err) {
+    rollback(err, () => replaceTodo(todo));
+  }
 }
 
 async function handleSave(todo, text) {
-  try {
-    replaceTodo(await store.updateTodo(todo.id, { text }));
-  } catch (err) {
-    showToast(err.message, 'error');
-  }
+  replaceTodo({ ...todo, text });
   render();
+  try {
+    await store.updateTodo(todo.id, { text });
+  } catch (err) {
+    rollback(err, () => replaceTodo(todo));
+  }
 }
 
 async function handleDelete(todo) {
+  const index = state.todos.findIndex((t) => t.id === todo.id);
+  state.todos = state.todos.filter((t) => t.id !== todo.id);
+  render();
   try {
     await store.deleteTodo(todo.id);
-    state.todos = state.todos.filter((t) => t.id !== todo.id);
   } catch (err) {
-    showToast(err.message, 'error');
+    rollback(err, () => {
+      if (!state.todos.some((t) => t.id === todo.id)) state.todos.splice(index, 0, todo);
+    });
   }
-  render();
 }
 
 form.addEventListener('submit', async (event) => {
@@ -128,7 +143,7 @@ const trialBanner = () =>
   el(
     'p',
     { class: 'notice', role: 'status' },
-    el('i', { class: 'fa-solid fa-flask', 'aria-hidden': 'true' }),
+    icon('flask'),
     el(
       'span',
       {},

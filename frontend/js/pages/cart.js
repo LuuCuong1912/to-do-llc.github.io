@@ -2,7 +2,7 @@ import { getCart, updateCartItem, removeCartItem } from '../api/cart.api.js';
 import { initPage } from '../utils/auth-guard.js';
 import { updateCartBadge } from '../components/navbar.js';
 import { showToast } from '../components/toast.js';
-import { el } from '../utils/dom.js';
+import { el, icon } from '../utils/dom.js';
 import { formatVND, MONTH_OPTIONS } from '../utils/format.js';
 
 await initPage({ access: 'required' });
@@ -42,7 +42,7 @@ const cartItemRow = (item) => {
   const removeButton = el(
     'button',
     { type: 'button', class: 'icon-btn', 'aria-label': `Xóa gói ${item.package.name} khỏi giỏ` },
-    el('i', { class: 'fa-solid fa-trash', 'aria-hidden': 'true' }),
+    icon('trash'),
   );
   removeButton.addEventListener('click', () => runAction(() => removeCartItem(item.id), removeButton));
 
