@@ -8,7 +8,9 @@ const start = async () => {
     console.log(`✅ Database connected (${env.db.name}@${env.db.host}:${env.db.port})`);
   } catch (err) {
     console.error(`❌ Không kết nối được MySQL: ${err.message}`);
-    console.error('   Kiểm tra: MySQL đã chạy chưa? DB_USER/DB_PASSWORD trong .env đúng chưa? Đã chạy "npm run db:setup" chưa?');
+    console.error(
+      '   Kiểm tra: MySQL đã chạy chưa? DB_USER/DB_PASSWORD trong .env đúng chưa? Đã chạy "npm run db:setup" chưa?',
+    );
     process.exit(1);
   }
 

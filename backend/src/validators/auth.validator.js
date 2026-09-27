@@ -1,11 +1,17 @@
 import Joi from 'joi';
 
-const email = Joi.string().trim().lowercase().email({ tlds: { allow: false } }).max(255).required().messages({
-  'any.required': 'Vui lòng nhập email',
-  'string.empty': 'Vui lòng nhập email',
-  'string.email': 'Email không hợp lệ',
-  'string.max': 'Email tối đa 255 ký tự',
-});
+const email = Joi.string()
+  .trim()
+  .lowercase()
+  .email({ tlds: { allow: false } })
+  .max(255)
+  .required()
+  .messages({
+    'any.required': 'Vui lòng nhập email',
+    'string.empty': 'Vui lòng nhập email',
+    'string.email': 'Email không hợp lệ',
+    'string.max': 'Email tối đa 255 ký tự',
+  });
 
 export const registerSchema = Joi.object({
   fullName: Joi.string().trim().min(2).max(100).required().messages({

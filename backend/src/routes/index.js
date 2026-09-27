@@ -1,5 +1,10 @@
 import { Router } from 'express';
 import authRoutes from './auth.routes.js';
+import packageRoutes from './package.routes.js';
+import cartRoutes from './cart.routes.js';
+import orderRoutes from './order.routes.js';
+import paymentRoutes from './payment.routes.js';
+import todoRoutes from './todo.routes.js';
 
 const router = Router();
 
@@ -9,8 +14,10 @@ router.get('/health', (req, res) => {
 });
 
 router.use('/auth', authRoutes);
-
-// Các giai đoạn sau gắn thêm route của từng chức năng tại đây, ví dụ:
-// router.use('/packages', packageRoutes);
+router.use('/packages', packageRoutes);
+router.use('/cart', cartRoutes);
+router.use('/orders', orderRoutes);
+router.use('/payments', paymentRoutes);
+router.use('/todos', todoRoutes);
 
 export default router;

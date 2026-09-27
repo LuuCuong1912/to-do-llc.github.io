@@ -5,8 +5,8 @@ export const AUTH_COOKIE = 'token';
 // httpOnly: JavaScript trên trình duyệt không đọc được cookie → chống bị đánh cắp token qua XSS
 const cookieOptions = {
   httpOnly: true,
-  sameSite: 'lax',
-  secure: env.isProduction, // production chạy HTTPS
+  sameSite: env.cookieSameSite,
+  secure: env.isProduction || env.cookieSameSite === 'none', // production chạy HTTPS; SameSite=None bắt buộc Secure
   path: '/',
 };
 

@@ -20,4 +20,22 @@ export const checkConnection = async () => {
   await pool.query('SELECT 1');
 };
 
+// Chạy nhiều câu SQL trong 1 TRANSACTION: tất cả cùng thành công, hoặc lỗi 1 câu thì hoàn tác hết.
+// Model nhận `conn` làm tham số cuối để chạy trong transaction này.
+//   await withTransaction(async (conn) => { await orderModel.create(data, conn); ... });
+export const withTransaction = async (work) => {
+  const conn = await pool.getConnection();
+  try {
+    await conn.beginTransaction();
+    const result = await work(conn);
+    await conn.commit();
+    return result;
+  } catch (err) {
+    await conn.rollback();
+    throw err;
+  } finally {
+    conn.release();
+  }
+};
+
 export default pool;

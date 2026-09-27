@@ -2,6 +2,8 @@ import bcrypt from 'bcrypt';
 import ApiError from '../utils/ApiError.js';
 import { signToken } from '../utils/jwt.js';
 import * as userModel from '../models/user.model.js';
+import { getCurrentPlan } from './subscription.service.js';
+import { countItems as countCartItems } from './cart.service.js';
 
 const SALT_ROUNDS = 10;
 
@@ -55,6 +57,7 @@ export const getProfile = async (userId) => {
   // Token còn hạn nhưng user đã bị xóa
   if (!user) throw new ApiError(401, 'UNAUTHENTICATED', 'Phiên đăng nhập không hợp lệ');
 
-  // Giai đoạn 7 sẽ bổ sung gói đang dùng (subscriptionService.getCurrentPlan)
-  return { user: toPublicUser(user), currentPlan: null };
+  // Navbar cần: tên, gói đang dùng, số món trong giỏ → gộp vào 1 request
+  const [currentPlan, cartCount] = await Promise.all([getCurrentPlan(userId), countCartItems(userId)]);
+  return { user: toPublicUser(user), currentPlan, cartCount };
 };

@@ -17,8 +17,13 @@ export const findById = async (id) => {
   return rows[0] ?? null;
 };
 
-export const create = async ({ fullName, email, passwordHash }) => {
-  const [result] = await pool.execute('INSERT INTO users (full_name, email, password_hash) VALUES (?, ?, ?)', [
+// Khóa dòng user tới hết transaction → các request cùng user phải xếp hàng (dùng khi kiểm tra giới hạn số việc)
+export const lockById = async (id, db) => {
+  await db.execute('SELECT id FROM users WHERE id = ? FOR UPDATE', [id]);
+};
+
+export const create = async ({ fullName, email, passwordHash }, db = pool) => {
+  const [result] = await db.execute('INSERT INTO users (full_name, email, password_hash) VALUES (?, ?, ?)', [
     fullName,
     email,
     passwordHash,

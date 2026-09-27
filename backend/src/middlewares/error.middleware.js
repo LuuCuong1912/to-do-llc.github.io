@@ -8,7 +8,6 @@ export const notFound = (req, res, next) => {
 
 // Bắt MỌI lỗi của ứng dụng. Express nhận ra error handler nhờ đủ 4 tham số,
 // và middleware này phải được khai báo CUỐI CÙNG trong app.js.
-// eslint-disable-next-line no-unused-vars
 export const errorHandler = (err, req, res, next) => {
   // Body gửi lên không phải JSON hợp lệ (lỗi từ express.json())
   if (err.type === 'entity.parse.failed') {
