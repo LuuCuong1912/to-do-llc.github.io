@@ -62,16 +62,28 @@
 
 .todo-stats__numbers {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   width: 80px;
   height: 80px;
-  font-size: 1.4rem;
   font-weight: 700;
+  line-height: 1.1;
+  white-space: nowrap;
   background: var(--color-primary);
   border: 2px solid rgba(255, 194, 209, 0.3);
   border-radius: 50%;
+}
+
+.todo-stats__done {
+  font-size: 1.4rem;
+}
+
+.todo-stats__total {
+  font-size: 0.8rem;
+  font-weight: 600;
+  opacity: 0.9;
 }
 
 /* ---------- Ô nhập ---------- */
@@ -106,8 +118,13 @@
 
 @media (max-width: 480px) {
   .todo-stats__numbers {
-    width: 60px;
-    height: 60px;
-    font-size: 1rem;
+    width: 64px;
+    height: 64px;
+  }
+  .todo-stats__done {
+    font-size: 1.1rem;
+  }
+  .todo-stats__total {
+    font-size: 0.7rem;
   }
 }

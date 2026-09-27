@@ -47,7 +47,13 @@ const render = () => {
   const completed = state.todos.filter((t) => t.completed).length;
 
   progress.style.width = total ? `${(completed / total) * 100}%` : '0%';
-  numbers.textContent = `${completed} / ${total}`;
+  // 2 tầng: số đã xong (to) trên "/ tổng" (nhỏ) → vừa vòng tròn kể cả "1000 / 1000".
+  // Khoảng trắng ở giữa: trình đọc màn hình vẫn đọc "1 / 100" (bị bỏ qua khi xếp flex nên không ảnh hưởng bố cục).
+  numbers.replaceChildren(
+    el('span', { class: 'todo-stats__done' }, String(completed)),
+    ' ',
+    el('span', { class: 'todo-stats__total' }, `/ ${total}`),
+  );
   usage.textContent =
     state.limits.maxTasks === null ? `${total} việc · không giới hạn` : `${total} / ${state.limits.maxTasks} việc`;
 
