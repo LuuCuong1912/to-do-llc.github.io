@@ -3,7 +3,7 @@ import globals from 'globals';
 import prettier from 'eslint-config-prettier';
 
 export default [
-  { ignores: ['**/node_modules/**', '.claude/**', 'guide/**', 'plans/**', 'coverage/**'] },
+  { ignores: ['**/node_modules/**', '.claude/**', 'guide/**', 'plans/**', 'coverage/**', 'frontend/assets/vendor/**'] },
   js.configs.recommended,
   {
     files: ['backend/**/*.js', 'e2e/**/*.js', 'scripts/**/*.js', '*.config.js'],

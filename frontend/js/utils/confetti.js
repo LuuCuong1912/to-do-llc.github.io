@@ -1,6 +1,7 @@
-// Hiệu ứng pháo giấy (thư viện @hiseb/confetti như app cũ).
+// Hiệu ứng pháo giấy (thư viện @hiseb/confetti như app cũ), tự host trong assets/vendor/:
+// không phụ thuộc CDN bên ngoài (CDN chậm/lỗi → mất hiệu ứng, test e2e chập chờn) và CSP chỉ cần 'self'.
 // Chỉ tải thư viện khi thật sự cần → trang mở nhanh hơn, gói Basic không tải thừa.
-const CONFETTI_SRC = 'https://cdn.jsdelivr.net/npm/@hiseb/confetti@2.1.0/dist/confetti.min.js';
+const CONFETTI_SRC = '/assets/vendor/confetti.min.js';
 let loading = null;
 
 const loadLibrary = () => {

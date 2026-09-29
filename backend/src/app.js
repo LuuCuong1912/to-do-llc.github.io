@@ -17,12 +17,12 @@ const frontendDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '
 if (env.trustProxy) app.set('trust proxy', 1);
 
 // Middleware chạy THEO THỨ TỰ khai báo:
-// 1. HTTP header bảo mật. CSP chỉ cho tải script/style/font từ chính trang và các CDN đang dùng.
+// 1. HTTP header bảo mật. CSP chỉ cho tải script/style/font từ chính trang (mọi thư viện đều tự host).
 app.use(
   helmet({
     contentSecurityPolicy: {
       directives: {
-        'script-src': ["'self'", 'https://cdn.jsdelivr.net'],
+        'script-src': ["'self'"],
         'style-src': ["'self'"],
         'font-src': ["'self'"],
         'img-src': ["'self'", 'data:'],
