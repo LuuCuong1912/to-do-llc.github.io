@@ -208,8 +208,7 @@ docs/                       database.md, api.md, deploy.md, screenshots/, postma
 2. Điền `VNP_TMN_CODE`, `VNP_HASH_SECRET` trong `backend/.env`. Khi 2 biến này có giá trị, phương thức VNPay tự hiện ra ở trang thanh toán
 3. VNPay không gọi được IPN vào `localhost`. Khi chạy trên máy, đặt `VNP_CONFIRM_ON_RETURN=true` (chỉ dùng khi dev), hoặc dùng [ngrok](https://ngrok.com) / Cloudflare Tunnel rồi khai báo URL IPN `https://<domain>/api/payments/vnpay/ipn` trong trang quản lý sandbox
 
-```
 ## Deploy
 
 Xem [docs/deploy.md](docs/deploy.md). Cách đơn giản nhất là deploy **1 dịch vụ** trên Render: Express phục vụ luôn thư mục `frontend/` (`SERVE_FRONTEND=true`), kết hợp MySQL trên Aiven, TiDB Cloud hoặc Railway.
-```
+
