@@ -11,6 +11,21 @@ if (missing.length > 0) {
   process.exit(1);
 }
 
+// Kết nối MySQL mã hóa SSL/TLS — bắt buộc với MySQL trên cloud (Aiven, TiDB Cloud...).
+//   DB_SSL=true      → bật SSL, LUÔN kiểm tra chứng chỉ máy chủ (không chấp nhận chứng chỉ giả mạo)
+//   DB_SSL_CA=...    → chứng chỉ CA dạng PEM (Aiven cung cấp file ca.pem). Dán nhiều dòng,
+//                      hoặc 1 dòng với các "\n". Bỏ trống → dùng CA có sẵn của hệ thống.
+const buildDbSsl = () => {
+  if (process.env.DB_SSL !== 'true') return undefined;
+
+  const ca = process.env.DB_SSL_CA?.replace(/\\n/g, '\n').trim();
+  if (ca && !ca.includes('BEGIN CERTIFICATE')) {
+    console.error('❌ DB_SSL_CA không phải chứng chỉ PEM (phải bắt đầu bằng -----BEGIN CERTIFICATE-----)');
+    process.exit(1);
+  }
+  return { rejectUnauthorized: true, ...(ca && { ca }) };
+};
+
 const env = {
   nodeEnv: process.env.NODE_ENV || 'development',
   isProduction: process.env.NODE_ENV === 'production',
@@ -26,6 +41,7 @@ const env = {
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD || '',
     name: process.env.DB_NAME,
+    ssl: buildDbSsl(), // undefined = không dùng SSL (MySQL trên máy cá nhân)
   },
   jwt: {
     secret: process.env.JWT_SECRET,

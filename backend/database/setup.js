@@ -52,6 +52,7 @@ const run = async () => {
     port: env.db.port,
     user: env.db.user,
     password: env.db.password,
+    ssl: env.db.ssl, // bật khi DB_SSL=true (MySQL trên cloud)
     multipleStatements: true, // cho phép chạy cả file .sql một lần — CHỈ dùng trong script này
   });
 
