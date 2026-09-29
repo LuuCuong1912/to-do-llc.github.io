@@ -4,6 +4,8 @@
 
 Website thương mại điện tử bán gói dịch vụ **Basic / Gold / Pro** cho một ứng dụng Todo List. Người dùng đăng ký, chọn gói, thêm vào giỏ hàng, thanh toán qua **VNPay** (hoặc thanh toán giả lập để demo), và dùng Todo App với giới hạn tính năng theo gói đã mua.
 
+🔗 **Demo trực tiếp:** https://todopro-luucuong.onrender.com (bản miễn phí nên lần mở đầu tiên có thể mất ~50 giây để máy chủ khởi động)
+
 Backend viết theo **kiến trúc nhiều lớp (MVC mở rộng)**: `route → middleware → controller → service → model → MySQL`.
 
 ![Trang chủ](docs/screenshots/01-landing.png)

@@ -75,10 +75,13 @@ Có tài khoản sandbox thì thêm các biến:
 |---|---|
 | `VNP_TMN_CODE`, `VNP_HASH_SECRET` | từ email VNPay |
 | `VNP_RETURN_URL` | `https://<ten-app>.onrender.com/api/payments/vnpay/return` |
+| `VNP_CONFIRM_ON_RETURN` | `true` cho tới khi VNPay cấu hình xong IPN URL (xem dưới) |
 
-Trong trang quản lý merchant sandbox, khai báo **IPN URL**: `https://<ten-app>.onrender.com/api/payments/vnpay/ipn`. Production **không** bật `VNP_CONFIRM_ON_RETURN`. Không cấu hình VNPay thì phương thức này tự ẩn, trang vẫn chạy với thanh toán giả lập.
+**IPN URL** (`https://<ten-app>.onrender.com/api/payments/vnpay/ipn`) không tự khai báo được trên trang merchant sandbox: phải gửi email nhờ bộ phận hỗ trợ VNPay cấu hình. Trong lúc chờ, `VNP_CONFIRM_ON_RETURN=true` cho phép xác nhận đơn ngay ở Return URL. Cách này vẫn an toàn: Backend kiểm tra chữ ký HMAC-SHA512, đối chiếu số tiền với đơn và bỏ qua giao dịch đã xử lý (chống xử lý trùng). Khi IPN đã hoạt động thì xóa biến này để IPN là nguồn xác nhận duy nhất.
 
-Thẻ test NCB (kiểm tra lại trong email VNPay): `9704198526191432198`, tên `NGUYEN VAN A`, ngày phát hành `07/15`, OTP `123456`.
+Không cấu hình VNPay thì phương thức này tự ẩn, trang vẫn chạy với thanh toán giả lập. Ở sandbox, trang Thanh toán tự hiện thẻ test bên dưới để người xem thử.
+
+Thẻ test NCB (công khai trong tài liệu VNPay): `9704198526191432198`, tên `NGUYEN VAN A`, ngày phát hành `07/15`, OTP `123456`.
 
 ## Nếu tách Frontend và Backend ra 2 tên miền
 
@@ -94,4 +97,5 @@ Cookie bên thứ ba ngày càng bị trình duyệt siết chặt, nên **khuy�
 - [ ] Đăng ký tài khoản mới → mua gói bằng thanh toán giả lập → dùng Todo App
 - [ ] Đăng nhập tài khoản demo
 - [ ] Mở trang một lần trước khi gửi link, để bản Free "thức dậy"
-- [ ] Thêm link demo vào `README.md` và CV
+- [x] Thêm link demo vào `README.md`
+- [ ] Thêm link demo vào CV
