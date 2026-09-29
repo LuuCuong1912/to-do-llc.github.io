@@ -11,3 +11,8 @@
 *.ico binary
 *.woff binary
 *.woff2 binary
+
+# Thống kê ngôn ngữ trên GitHub (Linguist): chỉ tính code của dự án.
+# Bộ kit Claude Code (.claude/, có nhiều script Python) và catalog guide/ không phải code của TodoPro.
+.claude/** linguist-vendored
+guide/** linguist-documentation
