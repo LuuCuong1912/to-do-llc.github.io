@@ -63,6 +63,13 @@ describe('Thanh toán', () => {
     expect(res.body.data.methods.map((m) => m.code)).toEqual(['mock', 'vnpay']);
   });
 
+  it('VNPay sandbox → kèm cờ sandbox + thẻ test công khai để người xem demo thử', async () => {
+    const res = await request(app).get('/api/payments/methods');
+    const vnpay = res.body.data.methods.find((m) => m.code === 'vnpay');
+    expect(vnpay).toMatchObject({ enabled: true, sandbox: true, testCard: { bank: 'NCB', otp: '123456' } });
+    expect(JSON.stringify(res.body)).not.toContain('test-hash-secret'); // không bao giờ lộ chuỗi bí mật
+  });
+
   it('IPN chữ ký sai → RspCode 97 (từ chối trước khi đụng DB)', async () => {
     const res = await request(app)
       .get('/api/payments/vnpay/ipn')

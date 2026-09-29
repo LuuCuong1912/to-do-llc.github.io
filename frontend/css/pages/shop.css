@@ -10,7 +10,7 @@
 
 @media (max-width: 860px) {
   .shop-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr); /* cho phép co nhỏ hơn nội dung dài (vd số thẻ) → không tràn ngang */
   }
 }
 
@@ -156,4 +156,39 @@
 
 .pay-method input {
   accent-color: var(--color-primary);
+}
+
+/* Ghi chú thẻ test VNPay sandbox (trang Thanh toán) */
+.test-card__list {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.test-card__row dt {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+/* Giá trị không ngắt dòng giữa chừng (số thẻ 19 chữ số phải đọc liền mạch) */
+.test-card__row dd {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  flex-wrap: wrap; /* hết chỗ thì nút Sao chép xuống dòng, số thẻ vẫn liền */
+  white-space: nowrap;
+}
+
+.test-card__copy {
+  padding: 0 var(--space-2);
+  font-size: 0.75rem;
+  color: var(--color-info);
+  border: 1px solid rgba(125, 211, 252, 0.4);
+  border-radius: var(--radius-pill);
+}
+
+.test-card__copy:hover {
+  background: rgba(125, 211, 252, 0.12);
 }

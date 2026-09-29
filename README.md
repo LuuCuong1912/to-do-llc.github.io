@@ -16,6 +16,20 @@ Backend viết theo **kiến trúc nhiều lớp (MVC mở rộng)**: `route →
 
 Tạo bằng lệnh `npm run db:seed-demo` (xem [Cài đặt](#cài-đặt-và-chạy-trên-máy)).
 
+## Thử nhanh (khoảng 2 phút)
+
+1. **Không cần tài khoản:** bấm **Dùng thử miễn phí** ở trang chủ để dùng Todo App (tối đa 5 việc)
+2. **Mua gói:** đăng ký tài khoản mới → chọn gói → **Thêm vào giỏ** → **Thanh toán**:
+   - **Thanh toán giả lập (demo):** 1 cú bấm là xong
+   - **VNPay (môi trường thử nghiệm, không trừ tiền thật):** trên trang VNPay chọn thẻ nội địa, nhập thẻ test công khai của VNPay:
+
+     | Ngân hàng | Số thẻ | Chủ thẻ | Ngày phát hành | OTP |
+     |---|---|---|---|---|
+     | NCB | `9704198526191432198` | `NGUYEN VAN A` | `07/15` | `123456` |
+
+     Trang Thanh toán cũng hiện sẵn thông tin thẻ này khi chọn VNPay
+3. **Dùng Todo App** với gói vừa mua, xem lại ở **Đơn hàng**
+
 ## Tính năng
 
 - **Landing page**: giới thiệu sản phẩm, bảng giá lấy từ CSDL, chọn số tháng (1 / 3 / 6 / 12)
